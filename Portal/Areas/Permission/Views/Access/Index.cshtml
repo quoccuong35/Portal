@@ -1,0 +1,104 @@
+﻿@using Portal.ViewModels;
+@{
+    ViewBag.Title = LanguageResource.Permission;
+}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <h4> @ViewBag.Title</h4>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                @using (Html.BeginForm("Index", null, FormMethod.Get, new { @id = "formRolesId", @class = "isd-form-search" }))
+                {
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <label class="control-label">@LanguageResource.Permission_RolesModel</label>
+                                    @Html.DropDownList("RolesId", null, new { @class = " form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="accessForm"></div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+@section CustomScripts {
+    <script>
+        $(document).ready(function () {
+            accessWithRoles();
+        });
+        //load data when change dropdownlist RolesId
+        $('#RolesId').change(function () {
+           // loading2();
+            accessWithRoles();
+        });
+        function accessWithRoles() {
+            var roles = $('#RolesId').val();
+            $.ajax({
+                type: "POST",
+                url: "/Permission/Access/_AccessFormPartial/" + roles,
+                data: {
+                    RolesId: roles,
+                },
+                success: function (jsonData) {
+                    $("#accessForm").html(jsonData);
+                },
+                error: function (xhr, status, error) {
+                    ShowToast.error(10000, xhr.responseText);
+                }
+            });
+        }
+
+        //Update PagePermission: btn-create, btn-edit, ....
+        $(document).on("click", ".funcChkBox", function () {
+            //loading2();
+            var roles = $('select[name="RolesId"] option:selected').val();
+            var page = $(this).data("pageid");
+            var func = $(this).val();
+            var check = $(this).prop("checked");
+            $.ajax({
+                type: "POST",
+                url: "/Permission/Access/EditPermission",
+                data: {
+                    RolesId: roles,
+                    PageId: page,
+                    FunctionId: func,
+                    Check: check,
+                },
+                success: function (jsonData) {
+                    if (jsonData.Success == true) {
+                        //phần này sẽ trả về đầu trang khi CLick và có câu thông báo
+                        //if (jsonData.Data != null) {
+                        //    alertPopup(true, jsonData.Data);
+                        //}
+                    }
+                    else {
+                        if (jsonData.Data != null && jsonData.Data != "") {
+                            ShowToast.error(10000, jsonData.Data);
+                        }
+                    }
+                    accessWithRoles();
+                },
+                error: function (xhr, status, error) {
+                    ShowToast.error(10000, xhr.responseText);
+                }
+            });
+
+        });
+    </script>
+}

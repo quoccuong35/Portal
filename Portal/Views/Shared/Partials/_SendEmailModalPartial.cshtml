@@ -1,0 +1,38 @@
+﻿@* Delete Confirm *@
+
+<div class="modal fade" id="divSendEmailPopup"  role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@LanguageResource.SendMail</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="frmSendmail">
+                @*@Html.AntiForgeryToken()*@
+                @Html.Hidden("idSendEmail")
+                @Html.Hidden("controller-sendmail")
+                <div class="modal-body">
+                    <div class="row text-center alert-message">
+                        @LanguageResource.Confirm_ConfirmSendmail
+                    </div>
+                    <div class="row text-center">
+                        <span class="text-black text-bold">Chú ý: &nbsp; </span> <span class="text-red">Gửi mail là không thể xóa hoặc sửa thông tin</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <span class="btn btn-default" data-dismiss="modal" id="btn-cancel-sendemail">@LanguageResource.Confirm_No</span>
+                    <a class="btn bg-gradient-info pull-right btn-confirm-sendemail" id="btn-confirm-sendemail">
+                        <span class='spinner-border spinner-border-sm d-none' role='status' aria-hidden='true'></span>
+                        @LanguageResource.Confirm_Yes
+                    </a>
+                </div>
+            </form>
+           
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

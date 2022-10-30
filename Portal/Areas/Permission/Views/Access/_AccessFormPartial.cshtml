@@ -1,0 +1,63 @@
+﻿@model List<MenuViewModel>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "updateform" }))
+{
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-body access">
+            <!-- Start .content -->
+            @{ int k = 0; }
+            @foreach (var menu in Model.Where(p => p.PageViewModels != null && p.PageViewModels.Count > 0).OrderBy(p => p.OrderIndex))
+            {
+
+                k++;
+
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h4 class="panel-title">
+                            <a href='#collapse-@menu.MenuId'>
+                                @menu.MenuName
+                            </a>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead class="isd-table-header">
+                                <tr>
+                                    <th class="text-center">@LanguageResource.NumberIndex</th>
+                                    <th>@LanguageResource.Permission_PageModel</th>
+                                    <th>@LanguageResource.Permission_FunctionModel</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{int i = 0;}
+                                @foreach (var page in menu.PageViewModels)
+                                {
+                                    i++;
+                                    <tr>
+                                        <td class="text-center" style="width:10%">@i</td>
+                                        <td style="width:50%">
+                                            @page.PageName
+                                        </td>
+                                        <td style="width:40%">
+                                            @foreach (var funcItem in page.FunctionViewModels)
+                                            {
+                                                string Checked = funcItem.Selected ? "Checked" : "";
+                                            <span class="permissionCheckBox">
+                                                <input name="FunctionId" type="checkbox" value="@funcItem.FunctionId" class="funcChkBox accessFunctionChkBox_@k@i" @Checked data-pageid="@page.PageId" data-row="@k" data-subrow="@i">
+                                                <span>@funcItem.FunctionName</span>&nbsp;|&nbsp;
+                                            </span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot></tfoot>
+                        </table>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+}

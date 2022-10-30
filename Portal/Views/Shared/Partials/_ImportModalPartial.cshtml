@@ -1,0 +1,104 @@
+﻿<div id="importexcel-window" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="importexcel-window-title">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="importexcel-window-title">Import from Excel</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+             {
+             <div class="form-horizontal">
+                <div class="modal-body">
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="control-label">
+                                Excel file
+                            </label>
+                            <input type="file" id="importexcelfile" name="importexcelfile" class="form-control" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+                            <input type="hidden" name="currentUrl" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress progressUpload" style="display:none;">
+                    <div class="progress-bar progress-bar-striped active" role="progressbar">
+                        <span class="bar"></span>
+                    </div>
+                </div>
+                <div class="card card-success" style="display:none" id="divModalAlertSuccess">
+                    <div class="card-header">
+                        <h3 class="card-title">Thành công</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <!-- /.card-tools -->
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body modal-alert-message">
+                        
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <div class="card bg-warning" style="display:none" id ="divModalAlertWarning">
+                    <div class="card-header">
+                        <h3 class="card-title">Lỗi</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <!-- /.card-tools -->
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body modal-alert-message">
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn bg-olive" id="btn-importExcel">
+                        <i class='fa fa-upload'></i>
+                        <span class='spinner-border spinner-border-sm d-none' role='status' aria-hidden='true'></span>
+                        Import from Excel
+                    </button>
+                </div>
+             </div>
+             }
+        </div>
+    </div>
+</div>
+
+<script>
+    
+    function setModalMessage(div, message) {
+        if (Array.isArray(message)) {
+            var arr = [];
+            $.each(message, function (i, item) {
+                arr[i] = { err: item }
+                $(div + " .modal-alert-message").append("<li>" + arr[i].err + "</li>");
+            });
+        }
+        else {
+            $(div + " .modal-alert-message").html(message);
+        }
+    }
+    function alertModalPopup(type, message) {
+        if (type == true) {
+            setModalMessage("#divModalAlertSuccess", message);
+            setTimeout(function () {
+                $('#divModalAlertSuccess').show();
+            }, 500)
+            setTimeout(function () {
+                $('#divModalAlertSuccess').hide();
+            }, 3000)
+        }
+        else if (type == false) {
+            setModalMessage("#divModalAlertWarning", message);
+            setTimeout(function () {
+                $('#divModalAlertWarning').show();
+            }, 500)
+        }
+    }
+</script>

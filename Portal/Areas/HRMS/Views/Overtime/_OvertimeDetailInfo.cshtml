@@ -1,0 +1,55 @@
+﻿@model List<OvertimeDetailViewModel>
+<table class="table table-head-fixed text-nowrap" id="table-nhansutangca">
+    <thead class="isd-table-header">
+        <tr>
+            <th class="text-center">@LanguageResource.Actions</th>
+            <th class="d-none">OvertimeId</th>
+            <th class="d-none">EmployeeId</th>
+            <th style="width:15%">@LanguageResource.EmployeeCode</th>
+            <th style="width:30%">@LanguageResource.FullName</th>
+            <th style="width:50%">@LanguageResource.Department</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Count() > 0)
+        {
+            int i = 0;
+            foreach (var item in Model)
+            {
+                 <tr>
+                     <td class="text-center">
+                         @{
+                             string block = "";
+                             if (item.Disable1)
+                             {
+                                 block = "disabled";
+                             }
+                         }
+                         <a class="btn btn-xs btn-danger btn-delete @block" data-code="@item.EmployeeCode.ToString()"><i class="fa fa-trash"></i></a>
+                         <input type="hidden" name="OverDetail[@i].OvertimeId" value="@item.OvertimeId" id='OverDetail_OvertimeId_@i' />
+                         <input type="hidden" name="OverDetail[@i].EmployeeId" value="@item.EmployeeId.ToString()" id="OverDetail_EmployeeId_@i" />
+                         <input type="hidden" name="OverDetail[@i].EmployeeCode" value="@item.EmployeeCode.ToString()" id="OverDetail_EmployeeCode_@i" />
+                         <input type="hidden" name="OverDetail[@i].FullName" value="@item.FullName.ToString()" id="OverDetail_FullName_@i" />
+                         <input type="hidden" name="OverDetail[@i].DepartmentName" value="@item.DepartmentName.ToString()" id="OverDetail_DepartmentName_@i" />
+                     </td>
+                    <td class="d-none">
+                        @item.OvertimeId
+                    </td>
+                    <td class="d-none">
+                        @item.EmployeeId 
+                    </td>
+                    <td>
+                        @item.EmployeeCode
+                    </td>
+                    <td>
+                        @item.FullName
+                    </td>
+                    <td>
+                        @item.DepartmentName
+                    </td>
+                </tr>
+                i++;
+            }
+        }
+    </tbody>
+</table>

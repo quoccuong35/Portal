@@ -1,0 +1,45 @@
+﻿@model IEnumerable<ConfirmWorkingTimeModel>
+@{
+    string CurrentController = ConstController.ConfirmWorkingTimeApproval;
+    string CurrentArea = ConstArea.HRMS;
+}
+<table id="data-list" class="table table-head-fixed text-nowrap">
+    <thead>
+        <tr>
+            <th>@LanguageResource.Actions</th>
+            <td style="display:none">ID</td>
+            <th>@LanguageResource.EmployeeCode</th>
+            <th>@LanguageResource.Customer_FirstName</th>
+            <th>@LanguageResource.Department</th>
+            <th>@LanguageResource.Date1</th>
+            <th>@LanguageResource.Time1</th>
+            <th>@LanguageResource.Type1</th>
+            <th>@LanguageResource.Reason</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td class="text-center">
+                @HtmlExtensions.ViewButton(CurrentArea, CurrentController, item.ConfirmWorkingTimeID)
+            </td>
+            <td style="display:none">@item.ConfirmWorkingTimeID.ToString()</td>
+            <td>@item.EmployeeModel.EmployeeCode</td>
+            <td>@item.EmployeeModel.FullName</td>
+            <td>@item.EmployeeModel.Department.DepartmentName</td>
+            <td>@item.Date1.ToString("dd/MM/yyyy")</td>
+            <td>@item.Time1.ToString(@"hh\:mm")</td>
+            <td>
+                @item.Type1.Replace("1", "Giờ vào").Replace("2", "Giờ ra")
+            </td>
+            <td class="text-center">@item.Reason</td>
+        </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(function () {
+        Portal.TableEdit("data-list", 50, 3, 0, "multi", []);
+    });
+</script>

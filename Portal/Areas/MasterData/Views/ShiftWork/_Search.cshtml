@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ShiftWork>
+@{
+    string CurrentController = ConstController.ShiftWork;
+
+    string CurrentArea = ConstArea.MasterData;
+}
+<table id="data-list" class="table table-head-fixed text-nowrap">
+    <thead>
+        <tr>
+            <th class="text-center">@LanguageResource.NumberIndex</th>
+            <th>@Html.DisplayNameFor(p => p.ShiftWorkCode)</th>
+            <th>@Html.DisplayNameFor(p => p.ShiftWorkName)</th>
+            <th>@Html.DisplayNameFor(p => p.StartTime)</th>
+            <th>@Html.DisplayNameFor(p => p.EndTimeBetweenShift)</th>
+            <th>@Html.DisplayNameFor(p => p.StartTimeBetweenShift)</th>
+            <th>@Html.DisplayNameFor(p => p.EndTime)</th>
+            <th>@Html.DisplayNameFor(p => p.TotalWorkTime)</th>
+            <th>@Html.DisplayNameFor(p => p.NumberMinuteLate)</th>
+            <th>@Html.DisplayNameFor(p => p.Description)</th>
+            <th>@Html.DisplayNameFor(p => p.OrderIndex)</th>
+            <th class="text-center">@Html.DisplayNameFor(p => p.Actived)</th>
+            <th class="text-center">@LanguageResource.Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int i = 0; }
+        @foreach (var item in Model)
+        {
+            i++;
+         <tr>
+            <td class="text-center">@i</td>
+            <td>@Html.DisplayFor(p => item.ShiftWorkCode)</td>
+            <td>@Html.DisplayFor(p => item.ShiftWorkName)</td>
+            <td>@Html.DisplayFor(p => item.StartTime)</td>
+            <td>@Html.DisplayFor(p => item.EndTimeBetweenShift)</td>
+            <td>@Html.DisplayFor(p => item.StartTimeBetweenShift)</td>
+            <td>@Html.DisplayFor(p => item.EndTime)</td>
+            <td>@Html.DisplayFor(p => item.TotalWorkTime)</td>
+            <td>@Html.DisplayFor(p => item.NumberMinuteLate)</td>
+            <td>@Html.DisplayFor(p => item.Description)</td>
+            <td class="text-center">@Html.DisplayFor(p => item.OrderIndex)</td>
+            <td class="text-center">@HtmlExtensions.ActivedIcon(item.Actived)</td>
+            <td class="text-center">
+                @HtmlExtensions.EditButton(CurrentArea, CurrentController, item.ShiftWorkId)
+                @HtmlExtensions.DeleteButton(CurrentArea, CurrentController, item.ShiftWorkName, item.ShiftWorkId)
+            </td>
+         </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(function () {
+        Portal.TableEdit("data-list",25,0,1,"api",[]);
+    });
+</script>

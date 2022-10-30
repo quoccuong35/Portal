@@ -1,0 +1,48 @@
+﻿@model IEnumerable<OvertimeModel>
+@{
+    string CurrentController = ConstController.Overtime;
+    string CurrentArea = ConstArea.HRMS;
+}
+<table id="data-list" class="table table-head-fixed text-nowrap">
+    <thead>
+        <tr>
+            <th>@LanguageResource.Actions</th>
+            <th>@LanguageResource.OvertimeDay</th>
+            <th>@LanguageResource.Department</th>
+             <th>@LanguageResource.ProjectID</th>
+            <th>@LanguageResource.OvertimeStartTime</th>
+            <th>@LanguageResource.OvertimeStartTime</th>
+            <th>@LanguageResource.BrowseStatusID</th>
+            <th>@LanguageResource.ReasonOT</th>
+            <th>@LanguageResource.ReasonStop</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+         <tr>
+             <td>
+                 @HtmlExtensions.EditButton(CurrentArea, CurrentController, item.OvertimeId)
+                 @if (item.Disable1 == null || !item.Disable1.Value)
+                 {
+                     @HtmlExtensions.DeleteButton(CurrentArea, CurrentController, "Tăng ca đang chọn", item.OvertimeId)
+                 }
+             </td>
+            <td>@item.OvertimeDay.ToString("dd/MM/yyyy")</td>
+            <td>@item.Department.DepartmentName</td>
+            <td>@item.ProjectID</td>
+            <td>@item.OvertimeStartTime.ToString(@"hh\:mm")</td>
+            <td>@item.OvertimeEndTime.ToString(@"hh\:mm")</td>
+            <td class="text-center">@item.BrowseStatusModel.BrowseStatusName </td>
+            <td class="text-center">@item.Reason</td>
+            <td class="text-center">@item.ReasonStop</td>
+         </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        Portal.TableEdit("data-list",50,1,0,"api");
+    });
+</script>

@@ -1,0 +1,294 @@
+﻿@model EmployeeModel
+@{
+    ViewBag.Title = LanguageResource.Edit + " " + LanguageResource.EmployeeModel;
+    string CurrentController = ConstController.EmployeeModel;
+    string CurrentArea = ConstArea.HRMS;
+    string CurrentUrl = HtmlExtensions.GetCurrentUrl(CurrentArea, CurrentController);
+    string linkAvatar = System.Configuration.ConfigurationManager.AppSettings["Avatar"].ToString();
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-4">
+                    <h4> @ViewBag.Title @HtmlExtensions.BackButton(CurrentArea, CurrentController)</h4>
+
+                </div>
+                <div class="col-sm-8">
+                    <div class="float-right">
+                        @HtmlExtensions.SaveEditButtonPermission("btn-save", LanguageResource.Btn_Save, CurrentArea, CurrentController)
+                        @HtmlExtensions.SaveEditButtonPermission("btn-save-continue", LanguageResource.Btn_SaveAndContinue, CurrentArea, CurrentController)
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { @enctype = "multipart/form-data", @id = "frmEdit" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(p => p.EmployeeId);
+                    <div class="card card-primary card-tabs">
+                        <div class="card-header p-0 pt-1">
+                            <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="custom-tabs-one-chung-tab" data-toggle="pill" href="#custom-tabs-one-chung" role="tab" aria-controls="custom-tabs-one-chung" aria-selected="true">Thông tin chung</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="custom-tabs-one-bosung-tab" data-toggle="pill" href="#custom-tabs-one-bosung" role="tab" aria-controls="custom-tabs-one-bosung" aria-selected="false">Thông tin bổ sung</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="custom-tabs-one-chung" role="tabpanel" aria-labelledby="custom-tabs-one-chung-tab">
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div class="profile-info-value"> <span class="profile-picture"><img src="@Model.ImageUrl" style="width:140px;height:146px" alt="User Image" id="avtImg" name="avtImg"></span> </div>
+                                            <div style="margin:auto;">
+                                                @Html.RequiredTextboxFor(p => p.ImageUrl, new { @type = "file" })
+                                            </div>
+                                            <script>
+                                                function handleFileSelect(evt) {
+                                                    var files = evt.target.files;
+                                                    for (var i = 0, f; f = files[i]; i++) {
+                                                        if (!f.type.match('image.*')) {
+                                                            continue;
+                                                        }
+                                                        var reader = new FileReader();
+                                                        reader.onload = (function (theFile) {
+                                                            return function (e) {
+                                                                var img = document.getElementById('avtImg');
+                                                                img.setAttribute("src", e.target.result);
+                                                            };
+                                                        })(f);
+                                                        reader.readAsDataURL(f);
+                                                    }
+                                                }
+                                                document.getElementById('ImageUrl').addEventListener('change', handleFileSelect, false);
+                                            </script>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    @Html.TooltipLabelForRequired(p => p.EmployeeCode)
+                                                    @Html.RequiredTextboxFor(p => p.EmployeeCode, new { @class = "form-control" })
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    @Html.TooltipLabelForRequired(p => p.TimekeepingCode)
+                                                    @Html.RequiredTextboxFor(p => p.TimekeepingCode, new { @class = "form-control" })
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    @Html.TooltipLabelForRequired(p => p.FullName)
+                                                    @Html.RequiredTextboxFor(p => p.FullName, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    @Html.TooltipLabelForRequired(p => p.Gender)
+                                                    @Html.ActivedRadioButtonGender(p => p.Gender)
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    @Html.TooltipLabelForRequired(p => p.DateOfBirth)
+                                                    @Html.RequiredTextboxFor(p => p.DateOfBirth, new { @class = "form-control" })
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    @Html.TooltipLabelForRequired(p => p.PlaceOfBirth)
+                                                    @Html.RequiredTextboxFor(p => p.PlaceOfBirth, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    @Html.TooltipLabelForRequired(p => p.EmployeeStatusCategoryId)
+                                                    @Html.RequiredDropDownListFor(p => p.EmployeeStatusCategoryId, null, LanguageResource.Dropdownlist_All, new { @class = "form-control with-search" })
+                                                </div>
+                                                <div class="col-md-4">
+                                                    @Html.TooltipLabelForRequired(p => p.WorkPlaceID)
+                                                    @Html.RequiredDropDownListFor(p => p.WorkPlaceID, null, LanguageResource.Dropdownlist_All, new { @class = "form-control with-search" })
+                                                </div>
+                                                <div class="col-md-4">
+                                                    @Html.TooltipLabelForRequired(p => p.DepartmentID)
+                                                    @Html.RequiredDropDownListFor(p => p.DepartmentID, null, LanguageResource.Dropdownlist_All, new { @class = "form-control with-search" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            @Html.TooltipLabelForRequired(p => p.ShiftWorkId)
+                                            @Html.RequiredDropDownListFor(p => p.ShiftWorkId, null, LanguageResource.Dropdownlist_All, new { @class = "form-control with-search" })
+                                        </div>
+                                        <div class="col-lg-3">
+                                            @Html.TooltipLabelForRequired(p => p.StandardWorkingDay)
+                                            @Html.RequiredTextboxFor(p => p.StandardWorkingDay, new { @class = "form-control", @type = "number", @min = "20" })
+                                        </div>
+                                        <div class="col-lg-3">
+                                            @Html.TooltipLabelForRequired(p => p.CompanyEmail)
+                                            @Html.RequiredTextboxFor(p => p.CompanyEmail, new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-lg-3">
+                                            @Html.TooltipLabelForRequired(p => p.PhoneNumber)
+                                            @Html.RequiredTextboxFor(p => p.PhoneNumber, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            @Html.TooltipLabelForRequired(p => p.DepartmentHint)
+                                            @Html.RequiredTextboxFor(p => p.DepartmentHint, new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-md-3">
+                                            @Html.TooltipLabelForRequired(p => p.PositionID)
+                                            @Html.RequiredDropDownListFor(p => p.PositionID, null, LanguageResource.Dropdownlist_All, new { @class = "form-control with-search" })
+                                        </div>
+                                        <div class="col-lg-3">
+                                            @Html.TooltipLabelForRequired(p => p.Specialized)
+                                            @Html.RequiredTextboxFor(p => p.Specialized, new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-lg-3">
+                                            @Html.TooltipLabelForRequired(p => p.WorkingDate)
+                                            @Html.RequiredDateboxFor(p => p.WorkingDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            @Html.TooltipLabelForRequired(p => p.IdentityCard)
+                                            @Html.RequiredTextboxFor(p => p.IdentityCard, new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-lg-3">
+                                            @Html.TooltipLabelForRequired(p => p.DateOfIssue)
+                                            @Html.RequiredDateboxFor(p => p.DateOfIssue, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                                        </div>
+                                        <div class="col-lg-3">
+                                            @Html.TooltipLabelForRequired(p => p.PlaceOfIssue)
+                                            @Html.RequiredTextboxFor(p => p.PlaceOfIssue, new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-md-3">
+                                            @Html.TooltipLabelForRequired(p => p.ParentId)
+                                            @Html.RequiredDropDownListFor(p => p.ParentId, null, LanguageResource.Dropdownlist_All, new { @class = "form-control with-search" })
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            @Html.TooltipLabelForRequired(p => p.OvertimeCategoryId)
+                                            @Html.RequiredDropDownListFor(p => p.OvertimeCategoryId, null, LanguageResource.Dropdownlist_All, new { @class = "form-control with-search" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="custom-tabs-one-bosung" role="tabpanel" aria-labelledby="custom-tabs-one-bosung-tab">
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            @Html.TooltipLabelForRequired(p => p.TaxId)
+                                            @Html.RequiredTextboxFor(p => p.TaxId, new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-lg-3">
+                                            @Html.TooltipLabelForRequired(p => p.SocialinsuranceNumber)
+                                            @Html.RequiredTextboxFor(p => p.SocialinsuranceNumber, new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-lg-6">
+                                            @Html.TooltipLabelForRequired(p => p.RegistrationHospital)
+                                            @Html.RequiredTextboxFor(p => p.RegistrationHospital, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            @Html.TooltipLabelForRequired(p => p.BankId)
+                                            @Html.RequiredDropDownListFor(p => p.BankId, null, LanguageResource.Dropdownlist_All, new { @class = "form-control with-search" })
+                                        </div>
+                                        <div class="col-lg-3">
+                                            @Html.TooltipLabelForRequired(p => p.BankCardNumber)
+                                            @Html.RequiredTextboxFor(p => p.BankCardNumber, new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-lg-6">
+                                            @Html.TooltipLabelForRequired(p => p.BankBranch)
+                                            @Html.RequiredTextboxFor(p => p.BankBranch, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            @Html.TooltipLabelForRequired(p => p.EducationId)
+                                            @Html.RequiredDropDownListFor(p => p.EducationId, null, LanguageResource.Dropdownlist_All, new { @class = "form-control with-search" })
+                                        </div>
+                                        <div class="col-md-3">
+                                            @Html.TooltipLabelForRequired(p => p.ReligionId)
+                                            @Html.RequiredDropDownListFor(p => p.ReligionId, null, LanguageResource.Dropdownlist_All, new { @class = "form-control with-search" })
+                                        </div>
+                                        <div class="col-md-3">
+                                            @Html.TooltipLabelForRequired(p => p.FolkId)
+                                            @Html.RequiredDropDownListFor(p => p.FolkId, null, LanguageResource.Dropdownlist_All, new { @class = "form-control with-search" })
+                                        </div>
+                                        <div class="col-md-3">
+                                            @Html.TooltipLabelForRequired(p => p.NationalityId)
+                                            @Html.RequiredDropDownListFor(p => p.NationalityId, null, LanguageResource.Dropdownlist_All, new { @class = "form-control with-search" })
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            @Html.TooltipLabelForRequired(p => p.TemporaryAddress)
+                                            @Html.RequiredTextAreaFor(p => p.TemporaryAddress, new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-md-6">
+                                            @Html.TooltipLabelForRequired(p => p.HouseholdAddress)
+                                            @Html.RequiredTextAreaFor(p => p.HouseholdAddress, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            @Html.TooltipLabelForRequired(p => p.TrialJobFromDay)
+                                            @Html.RequiredDateboxFor(p => p.TrialJobFromDay, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                                        </div>
+                                        <div class="col-lg-3">
+                                            @Html.TooltipLabelForRequired(p => p.TrialJobEndDay)
+                                            @Html.RequiredDateboxFor(p => p.TrialJobEndDay, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                                        </div>
+                                        <div class="col-lg-3">
+                                            @Html.TooltipLabelForRequired(p => p.EndDate)
+                                            @Html.RequiredDateboxFor(p => p.EndDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                                        </div>
+                                        <div class="col-lg-3">
+                                            @Html.TooltipLabelForRequired(p => p.RemainingLeavedays)
+                                            @Html.RequiredTextboxFor(p => p.RemainingLeavedays, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            @Html.TooltipLabelForRequired(p => p.Description)
+                                            @Html.RequiredTextAreaFor(p => p.Description, new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-lg-3" style="padding-top:30px">
+                                            @Html.TooltipLabelForRequired(p => p.IsHead)
+                                            @Html.EditorFor(p => p.IsHead)
+                                        </div>
+                                        <div class="col-lg-3">
+                                            @Html.TooltipLabelForRequired(p => p.Actived)
+                                            @Html.ActivedRadioButton(p => p.Actived)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                }
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+@section CustomScripts {
+    <script>
+        //load default and set event
+        $(function () {
+            $("select").select2({ width: "100%"});
+            Portal.EditInitial("@CurrentUrl");
+
+        })
+    </script>
+}

@@ -1,0 +1,99 @@
+﻿@model MaTrixFurloughModel
+@{
+    ViewBag.Title = LanguageResource.Create + " " + LanguageResource.MaTrixFurlough;
+    string CurrentController = ConstController.MaTrixFurlough;
+    string CurrentArea = ConstArea.MasterData;
+    string CurrentUrl = HtmlExtensions.GetCurrentUrl(CurrentArea, CurrentController);
+}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-8">
+                    <h4> @ViewBag.Title @HtmlExtensions.BackButton(CurrentArea, CurrentController)</h4>
+                </div>
+                <div class="col-sm-4">
+                    <div class="float-right">
+                        @HtmlExtensions.SaveButton("btn-save", LanguageResource.Btn_Save)
+                        @HtmlExtensions.SaveButton("btn-save-continue", LanguageResource.Btn_SaveAndContinue)
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { @enctype = "multipart/form-data", @id = "frmCreate" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-edit"></i> Thông tin dữ liệu</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TooltipLabelForRequired(p => p.MaTrixFurloughName)
+                                    @Html.RequiredTextboxFor(p => p.MaTrixFurloughName, new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.TooltipLabelForRequired(p => p.DepartmentID)
+                                    @Html.RequiredDropDownListFor(p => p.DepartmentID, null, LanguageResource.Dropdownlist_All, new { @class = "form-control  with-search" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TooltipLabelForRequired(p => p.FromDay)
+                                    @Html.RequiredTextboxFor(p => p.FromDay, new { @type = "number" })
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.TooltipLabelForRequired(p => p.ToDay)
+                                    @Html.RequiredTextboxFor(p => p.ToDay, new { @type = "number" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TooltipLabelForRequired(p => p.ApprovalLevel)
+                                    @Html.RequiredTextboxFor(p => p.ApprovalLevel, new { @type = "number" })
+
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.TooltipLabelForRequired(p => p.ApprovalName)
+                                    @Html.RequiredTextboxFor(p => p.ApprovalName)
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    @Html.TooltipLabelForRequired(p => p.Note)
+                                    @Html.RequiredTextboxFor(p => p.Note)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TooltipLabelForRequired(p => p.Actived)
+                                    @Html.ActivedRadioButton(p => p.Actived)
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                }
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+@section CustomScripts {
+    <script>
+        //load default and set event
+        $(document).ready(function () {
+            Portal.CreateInitial("@CurrentUrl");
+        });
+    </script>
+}

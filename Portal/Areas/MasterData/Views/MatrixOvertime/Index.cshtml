@@ -1,0 +1,86 @@
+﻿@model MatrixOvertimeModel
+@{
+    ViewBag.Title = LanguageResource.MatrixOvertime.ToLower();
+    string CurrentController = ConstController.MatrixOvertime;
+    string CurrentArea = ConstArea.MasterData;
+    string CurrentUrl = HtmlExtensions.GetCurrentUrl(CurrentArea, CurrentController);
+}
+
+<div class="content-wrapper layout-fixed">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-8">
+                    <h4 class="m-0 text-dark">Quản lý @ViewBag.Title</h4>
+                </div>
+                <div class="col-sm-4">
+                    <div class="float-right">
+                        @HtmlExtensions.CreateButton(CurrentArea, CurrentController)
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                @using (Html.BeginForm("_Search", null, FormMethod.Post, new { @id = "frmSearch" }))
+                {
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-search-plus"></i> Tìm kiếm</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>@LanguageResource.OvertimeCategory</label>
+                                    @Html.DropDownList("OvertimeCategoryId",ViewBag.OvertimeCategoryId as SelectList, LanguageResource.Dropdownlist_All, new { @class = "form-control" })
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>@LanguageResource.Actived</label>
+                                    @Html.DropDownList("Actived", new List<SelectListItem>(){
+                                       new SelectListItem(){Text = LanguageResource.Dropdownlist_All, Value = ""},
+                                       new SelectListItem(){Text = LanguageResource.Actived_True, Value = "true", Selected = true},
+                                       new SelectListItem(){Text = LanguageResource.Actived_False, Value = "false"}
+                                       }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            @HtmlExtensions.SearchButton()
+                        </div>
+                        <!-- /.card-footer-->
+                    </div>
+                }
+            </div>
+            <div class="col-md-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-body">
+                        <div id="divSearchResult"></div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+@section CustomScripts {
+    <script>
+        //load default and set event
+        $(document).ready(function () {
+            Portal.SearchInitial("@CurrentUrl");
+            Portal.ShowMessage(window.location.href);
+        });
+    </script>
+}

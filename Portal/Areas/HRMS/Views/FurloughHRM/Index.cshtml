@@ -1,0 +1,104 @@
+﻿@model FurloughSearchView
+@{
+    ViewBag.Title = LanguageResource.FurloughHRM;
+    string CurrentController = ConstController.FurloughHRM;
+    string CurrentArea = ConstArea.HRMS;
+    string CurrentUrl = HtmlExtensions.GetCurrentUrl(CurrentArea, CurrentController);
+}
+<style>
+    .select-checkbox {
+        width: 23px;
+        height: 23px;
+    }
+</style>
+<div class="content-wrapper layout-fixed">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-lg-8">
+                    <h4 class="m-0 text-dark"> @ViewBag.Title</h4>
+                </div>
+                <div class="col-lg-4">
+                    <div class="float-right"> 
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                @using (Html.BeginForm("_Search", null, FormMethod.Post, new { @id = "frmSearch" }))
+                {
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-search-plus"></i> Tìm kiếm</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    @Html.TooltipLabelFor(p => p.LeaveCategoryId)
+                                    @Html.DropDownList("LeaveCategoryId", null, LanguageResource.Dropdownlist_All, new { @class = "form-control with-search" })
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TooltipLabelFor(p => p.DepartmentID)
+                                    @Html.DropDownList("DepartmentID", null, LanguageResource.Dropdownlist_All, new { @class = "form-control with-search" })
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TooltipLabelFor(p => p.EmployeeCode)
+                                    @Html.TextBoxFor(p => p.EmployeeCode, new { @class = "form-control" })
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    @Html.TooltipLabelFor(p => p.FullName)
+                                    @Html.TextBoxFor(p => p.FullName, new { @class = "form-control" })
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TooltipLabelFor(p => p.FromDate)
+                                    @Html.RequiredTextboxFor(p => p.FromDate, new { @class = "form-control", @type = "date" })
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TooltipLabelFor(p => p.ToDate)
+                                    @Html.RequiredTextboxFor(p => p.ToDate, new { @class = "form-control", @type = "date" })
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            @HtmlExtensions.SearchButton()
+                        </div>
+                        <!-- /.card-footer-->
+                    </div>
+                }
+            </div>
+            <div class="col-md-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-body">
+                        <div id="divSearchResult"></div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+@section CustomScripts {
+    <script>
+        //load default and set event
+        $(document).ready(function () {
+            Portal.SearchInitial("@CurrentUrl");
+            Portal.ShowMessage(window.location.href);
+        });
+    </script>
+}

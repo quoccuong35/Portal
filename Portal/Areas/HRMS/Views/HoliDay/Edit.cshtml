@@ -1,0 +1,57 @@
+﻿@model HoliDayModel
+@{
+    ViewBag.Title = LanguageResource.Edit + " " + LanguageResource.HoliDay;
+    string CurrentController = ConstController.HoliDay;
+    string CurrentArea = ConstArea.HRMS;
+    string CurrentUrl = HtmlExtensions.GetCurrentUrl(CurrentArea, CurrentController);
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-8">
+                    <h4> @ViewBag.Title @HtmlExtensions.BackButton(CurrentArea, CurrentController)</h4>
+                </div>
+                <div class="col-sm-4">
+                    <div class="float-right">
+                        @HtmlExtensions.SaveButton("btn-save", LanguageResource.Btn_Save)
+                        @HtmlExtensions.SaveButton("btn-save-continue", LanguageResource.Btn_SaveAndContinue)
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { @enctype = "multipart/form-data", @id = "frmEdit" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(it=>it.HolydayId)
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-edit"></i> Thông tin dữ liệu</h3>
+                        </div>
+                        <div class="card-body">
+                            @Html.Partial("_HoliDay",Model)
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                }
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+@section CustomScripts {
+    <script>
+        $(document).ready(function () {
+            Portal.EditInitial("@CurrentUrl");
+        });
+    </script>
+}

@@ -1,0 +1,71 @@
+﻿@model EmployeeInfoView
+<div> <span style="color:red">@ViewBag.Error</span></div>
+<div class="row" id="EmployeeInfo">
+    <input type="hidden" name="Employee.EmployeeId" value="@Model.EmployeeId" />
+    <input type="hidden" name="Employee.EmployeeCode" value="@Model.EmployeeCode" />
+    <input type="hidden" name="Employee.FullName" value="@Model.FullName" />
+    <input type="hidden" name="Employee.DepartmentName" value="@Model.DepartmentName" />
+    <div class="col-lg-3">
+        <div class="form-group">
+            @Html.TooltipLabelForRequired(p => p.EmployeeCode)
+            <div class="input-group">
+                <div class="input-group-append">
+                    <div class="input-group mb-3">
+                        @if (Model.Readonly)
+                        {
+                            @Html.RequiredTextboxFor(p => p.EmployeeCode, new { @class = "form-control", @id = "EmployeeCode",@readonly=true })
+                        }
+                        else
+                        {
+                            @Html.RequiredTextboxFor(p => p.EmployeeCode, new { @class = "form-control", @id = "EmployeeCode" })
+                        }
+
+                        <div class="input-group-append">
+                            <button class="btn btn-block bg-gradient-success btn-sm" onclick="SearhEmpoyee()" type="button" id="btn-search-employee"><i class="fa fa-search" id="btn-searchemployee"> </i>Tìm</button>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    function SearhEmpoyee() {
+
+                        var employeeCode = $("#EmployeeCode").val();
+                        var employeeCodeOld = "@Model.EmployeeCode";
+                        formData = new FormData();
+                        formData.append("employeeCode", employeeCode);
+                        formData.append("employeeCodeOld", employeeCodeOld);
+                       
+                        $.ajax({
+                            type: "POST",
+                            url: "/HRMS/EmployeeInfo/SearchEmployeeInfo",
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function (jsonData) {
+                                $("#EmployeeInfo").html(jsonData);
+                                if (jsonData.Success == false) {
+                                    alert(jsonData.Data);
+                                    return;
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                alert(xhr.responseText);
+                            }
+                        });
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        @Html.TooltipLabelForRequired(p => p.FullName)
+        @Html.RequiredTextboxFor(p => p.FullName, new { @class = "form-control", @readonly = true })
+    </div>
+    <div class="col-lg-3">
+        @Html.TooltipLabelForRequired(p => p.RemainingLeavedays)
+        @Html.RequiredTextboxFor(p => p.RemainingLeavedays, new { @class = "form-control", @readonly = true})
+    </div>
+    <div class="col-lg-3">
+        @Html.TooltipLabelForRequired(p => p.DepartmentName)
+        @Html.RequiredTextboxFor(p => p.DepartmentName, new { @class = "form-control", @readonly = true })
+    </div>
+</div>

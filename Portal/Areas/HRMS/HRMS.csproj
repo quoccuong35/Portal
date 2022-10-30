@@ -1,0 +1,274 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0FDECECB-60E6-4300-8115-3EBD98A1C7B2}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HRMS</RootNamespace>
+    <AssemblyName>HRMS</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.Webpages.3.2.4\lib\net45\System.Web.Webpages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Deployment">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.Webpages.3.2.4\lib\net45\System.Web.Webpages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Razor">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.Webpages.3.2.4\lib\net45\System.Web.Webpages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.Webpages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ConfirmWorkingTimeHRMController.cs" />
+    <Compile Include="Controllers\ConfirmWorkingTimeApprovalController.cs" />
+    <Compile Include="Controllers\ConfirmWorkingTimeController.cs" />
+    <Compile Include="Controllers\EmployeeInfoController.cs" />
+    <Compile Include="Controllers\EmployeeModelController.cs" />
+    <Compile Include="Controllers\FurloughApprovalController.cs" />
+    <Compile Include="Controllers\FurloughHRMController.cs" />
+    <Compile Include="Controllers\FurloughModelController.cs" />
+    <Compile Include="Controllers\HoliDayController.cs" />
+    <Compile Include="Controllers\OvertimeApprovalController.cs" />
+    <Compile Include="Controllers\OvertimeController.cs" />
+    <Compile Include="Controllers\OvertimeHRMController.cs" />
+    <Compile Include="Controllers\TimeKeepingPeriodController.cs" />
+    <Compile Include="Controllers\WorkdayController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="HRMSAreaRegistration.cs" />
+    <Compile Include="Models\clsFunction.cs" />
+    <Compile Include="Models\ConfirmWorkingTimeFunction.cs" />
+    <Compile Include="Models\FurloughFunction.cs" />
+    <Compile Include="Models\OvertimeFunction.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\web.config" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="packages.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\EmployeeModel\Index.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\EmployeeModel\_Search.cshtml" />
+    <Content Include="Views\EmployeeModel\Create.cshtml" />
+    <Content Include="Views\EmployeeModel\Edit.cshtml" />
+    <Content Include="Views\FurloughModel\_Search.cshtml" />
+    <Content Include="Views\EmployeeInfo\_EmployeeInfo.cshtml" />
+    <Content Include="Views\FurloughModel\Create.cshtml" />
+    <Content Include="Views\FurloughModel\_FurloughDetailInfo.cshtml" />
+    <Content Include="Views\FurloughModel\_FurloughDetailInfoInner.cshtml" />
+    <Content Include="Views\FurloughModel\Edit.cshtml" />
+    <Content Include="Views\FurloughApproval\_Search.cshtml" />
+    <Content Include="Views\FurloughApproval\Index.cshtml" />
+    <Content Include="Views\FurloughModel\Index.cshtml" />
+    <Content Include="Views\FurloughHRM\Index.cshtml" />
+    <Content Include="Views\FurloughHRM\_Search.cshtml" />
+    <Content Include="Views\FurloughModel\_Furlough.cshtml" />
+    <Content Include="Views\FurloughHRM\Edit.cshtml" />
+    <Content Include="Views\Shared\_AppHistory.cshtml" />
+    <Content Include="Views\FurloughApproval\View.cshtml" />
+    <Content Include="Views\Overtime\Index.cshtml" />
+    <Content Include="Views\Overtime\_Search.cshtml" />
+    <Content Include="Views\Overtime\Create.cshtml" />
+    <Content Include="Views\Overtime\_Overtime.cshtml" />
+    <Content Include="Views\Overtime\_OvertimeDetailInfo.cshtml" />
+    <Content Include="Views\Overtime\_OvertimeDetailInfoInner.cshtml" />
+    <Content Include="Views\Overtime\Edit.cshtml" />
+    <Content Include="Views\OvertimeApproval\_Search.cshtml" />
+    <Content Include="Views\OvertimeApproval\Index.cshtml" />
+    <Content Include="Views\OvertimeApproval\View.cshtml" />
+    <Content Include="Views\OvertimeHRM\Index.cshtml" />
+    <Content Include="Views\OvertimeHRM\_Search.cshtml" />
+    <Content Include="Views\OvertimeHRM\Edit.cshtml" />
+    <Content Include="Views\ConfirmWorkingTime\Index.cshtml" />
+    <Content Include="Views\ConfirmWorkingTime\_Search.cshtml" />
+    <Content Include="Views\ConfirmWorkingTime\Create.cshtml" />
+    <Content Include="Views\ConfirmWorkingTime\_ConfirmWorkingTime.cshtml" />
+    <Content Include="Views\ConfirmWorkingTime\Edit.cshtml" />
+    <Content Include="Views\ConfirmWorkingTimeApproval\Index.cshtml" />
+    <Content Include="Views\ConfirmWorkingTimeApproval\_Search.cshtml" />
+    <Content Include="Views\ConfirmWorkingTimeApproval\View.cshtml" />
+    <Content Include="Views\ConfirmWorkingTimeHRM\Index.cshtml" />
+    <Content Include="Views\ConfirmWorkingTimeHRM\_Search.cshtml" />
+    <Content Include="Views\ConfirmWorkingTimeHRM\Edit.cshtml" />
+    <Content Include="Views\TimeKeepingPeriod\Index.cshtml" />
+    <Content Include="Views\TimeKeepingPeriod\_Search.cshtml" />
+    <Content Include="Views\TimeKeepingPeriod\Create.cshtml" />
+    <Content Include="Views\TimeKeepingPeriod\_TimeKeepingPeriod.cshtml" />
+    <Content Include="Views\TimeKeepingPeriod\Edit.cshtml" />
+    <Content Include="Views\HoliDay\Index.cshtml" />
+    <Content Include="Views\HoliDay\_Search.cshtml" />
+    <Content Include="Views\HoliDay\Create.cshtml" />
+    <Content Include="Views\HoliDay\Edit.cshtml" />
+    <Content Include="Views\HoliDay\_HoliDay.cshtml" />
+    <Content Include="Views\Workday\Index.cshtml" />
+    <Content Include="Views\Workday\_Search.cshtml" />
+    <Content Include="Views\Workday\Create.cshtml" />
+    <Content Include="Views\Workday\_Workday.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Portal.Constant\Portal.Constant.csproj">
+      <Project>{bf050cf4-d978-4023-af7e-de9d1f1892da}</Project>
+      <Name>Portal.Constant</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Portal.EntityModels\Portal.EntityModels.csproj">
+      <Project>{b25a0be7-9655-4f04-8b63-7b7f5d44e087}</Project>
+      <Name>Portal.EntityModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Portal.Extensions\Portal.Extensions.csproj">
+      <Project>{480370ce-21d8-446c-a518-731ce26098a8}</Project>
+      <Name>Portal.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Portal.Repositories\Portal.Repositories.csproj">
+      <Project>{e8b16fbc-e2c7-4901-8de8-8b973548167e}</Project>
+      <Name>Portal.Repositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Portal.Resources\Portal.Resources.csproj">
+      <Project>{4c426c97-958d-48a4-852d-a9a35bbe420e}</Project>
+      <Name>Portal.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Portal.ViewModels\Portal.ViewModels.csproj">
+      <Project>{04e09157-531b-4621-b4d9-6e84edcc3af3}</Project>
+      <Name>Portal.ViewModels</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>64363</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:64363/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

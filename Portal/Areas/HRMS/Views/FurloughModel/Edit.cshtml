@@ -1,0 +1,134 @@
+﻿@model FurloughViewModel
+@{
+    ViewBag.Title = LanguageResource.Edit + " " + LanguageResource.FurloughModel;
+    string CurrentController = ConstController.FurloughModel;
+    string CurrentArea = ConstArea.HRMS;
+    string CurrentUrl = HtmlExtensions.GetCurrentUrl(CurrentArea, CurrentController);
+}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-4">
+                    <h4> @ViewBag.Title @HtmlExtensions.BackButton(CurrentArea, CurrentController)</h4>
+                </div>
+                <div class="col-sm-8">
+                    <div class="float-right">
+                        @*người tạo*@
+                        @if (Model.CreatedAccountId == Model.AccountID && Model.BrowseStatusID != "3" && Model.BrowseStatusID != "4")
+                        {
+                            @HtmlExtensions.SendMailButton(CurrentArea, CurrentController, "Gửi mail", Model.FurloughId.Value)
+                        }
+                        @if ((Model.Lock == null || !Model.Lock.Value) && Model.CreatedAccountId == Model.AccountID)
+                        {
+                            @HtmlExtensions.SaveButton("btn-save", LanguageResource.Btn_Save) @Html.Raw("&nbsp")
+                            @HtmlExtensions.SaveButton("btn-save-continue", LanguageResource.Btn_SaveAndContinue)
+                        }
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { @enctype = "multipart/form-data", @id = "frmEdit" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(p => p.FurloughId)
+                    <div class="card card-primary card-tabs">
+                        <div class="card-header p-0 pt-1">
+                            <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="custom-tabs-one-chung-tab" data-toggle="pill" href="#custom-tabs-one-chung" role="tab" aria-controls="custom-tabs-one-chung" aria-selected="true">Thông tin dữ liệu</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="custom-tabs-one-bosung-tab" data-toggle="pill" href="#custom-tabs-one-bosung" role="tab" aria-controls="custom-tabs-one-bosung" aria-selected="false">Thông tin duyệt</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="custom-tabs-one-chung" role="tabpanel" aria-labelledby="custom-tabs-one-chung-tab">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            @Html.Partial("_Furlough")
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="card card-primary card-outline">
+                                                <div class="card-body table-responsive">
+                                                    <div id="detailLst">@Html.Partial("_FurloughDetailInfo", Model.FurloughDetail)</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="custom-tabs-one-bosung" role="tabpanel" aria-labelledby="custom-tabs-one-bosung-tab">
+                                    @Html.Partial("_AppHistory",Model.AppHistory)
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    }
+                </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+@section CustomScripts {
+    <script>
+        //load default and set event
+        $(document).ready(function () {
+            Portal.EditInitial("@CurrentUrl");
+            Portal.TableEdit("tbl-nghiphep", -1, 0, 0, "api");
+            document.getElementById("FromDate").disabled = true;
+            document.getElementById("ToDate").disabled = true;
+            document.getElementById("btn-search-employee").disabled = true;
+        });
+        function StateChange(e) {
+            var FromDate = $("#FromDate").val();
+            var ToDate = $("#ToDate").val();
+            if (!FromDate || !ToDate) {
+                return;
+            }
+            formData = new FormData();
+            formData.append("FromDate", FromDate);
+            formData.append("ToDate", ToDate);
+
+            $.ajax({
+                type: "POST",
+                url: "/HRMS/FurloughModel/AddDays",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (jsonData) {
+                    $("#detailLst").html(jsonData);;
+                    if (jsonData.Success == false) {
+                        alert(jsonData.Data);
+                        return;
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+        //Update PagePermission: btn-create, btn-edit, ....
+        $(document).on("click", ".funcChkBox", function () {
+            var func = $(this).val();
+            var check = $(this).prop("checked");
+            var idhidden = $(this).data("hidden");
+            $("#" + idhidden).val(check);
+        });
+        function CallChangefunc(even) {
+            var idHidden = even.id;
+            var value = $("#" + idHidden).val();
+            $("#TypeDate_" + idHidden).val(value);
+        }
+    </script>
+}

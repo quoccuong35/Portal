@@ -1,0 +1,30 @@
+﻿@model List<OvertimeDetailViewModel>
+@{
+    int i = 0;
+}
+@if (Model != null && Model.Count() > 0)
+{
+    foreach (var item in Model)
+    {
+        <tr>
+            <td class="">
+                <a class="btn btn-xs btn-danger btn-delete" data-code="@item.EmployeeCode.ToString()"><i class="fa fa-trash"></i></a>
+                <input type="hidden" name="OverDetail[@i].OvertimeId" value="@item.OvertimeId" id='OverDetail_OvertimeId_@i' />
+                <input type="hidden" name="OverDetail[@i].EmployeeId" value="@item.EmployeeId.ToString()" id="OverDetail_EmployeeId_@i" />
+            </td>
+            <td>
+                @item.EmployeeCode
+                <input type="hidden" name="OverDetail[@i].EmployeeCode" value="@item.EmployeeCode.ToString()" id="OverDetail_EmployeeCode_@i" />
+            </td>
+            <td>
+                @item.FullName
+                <input type="hidden" name="OverDetail[@i].FullName" value="@item.FullName.ToString()" id="OverDetail_FullName_@i" />
+            </td>
+            <td>
+                @item.DepartmentName
+                <input type="hidden" name="OverDetail[@i].DepartmentName" value="@item.DepartmentName.ToString()" id="OverDetail_DepartmentName_@i" />
+            </td>
+        </tr>
+        i++;
+    }
+}

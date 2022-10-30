@@ -1,0 +1,50 @@
+﻿@model IEnumerable<OvertimeModel>
+@{
+    string CurrentController = ConstController.OvertimeHRM;
+
+    string CurrentArea = ConstArea.HRMS;
+}
+<table id="data-list" class="table table-head-fixed text-nowrap">
+    <thead>
+        <tr>
+            <th>@LanguageResource.Actions</th>
+            <td style="display:none">ID</td>
+            <th>Người tạo</th>
+            <th>@LanguageResource.BrowseStatusID</th>
+            <th>@LanguageResource.OvertimeDay</th>
+            <th>@LanguageResource.Department</th>
+            <th>@LanguageResource.OvertimeStartTime</th>
+            <th>@LanguageResource.OvertimeEndTime</th>
+            <th>Số người tăng ca</th>
+            <th>@LanguageResource.Reason</th>
+            <th>@LanguageResource.ReasonStop</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td class="text-center"> @HtmlExtensions.EditButton(CurrentArea, CurrentController, item.OvertimeId)</td>
+            <td style="display:none">@item.OvertimeId.ToString()</td>
+            <td>@item.Account.EmployeeModel.FullName</td>
+            <td>
+                @item.BrowseStatusModel.BrowseStatusName
+            </td>
+            <td>
+                @item.OvertimeDay.ToString("dd/MM/yyyy")
+            </td>
+            <td>@item.Department.DepartmentName</td>
+            <td>@item.OvertimeStartTime.ToString(@"hh\:ss")</td>
+            <td>@item.OvertimeEndTime.ToString(@"hh\:ss")</td>
+            <td>@item.OvertimeDetailModels.Count().ToString()</td>
+            <td class="text-center">@item.Reason</td>
+            <td class="text-center">@item.ReasonStop</td>
+        </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        Portal.TableEdit("data-list",50,0,0,"api");
+    });
+</script>

@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{04E09157-531B-4621-B4D9-6E84EDCC3AF3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Portal.ViewModels</RootNamespace>
+    <AssemblyName>Portal.ViewModels</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\ExcelTemplate.cs" />
+    <Compile Include="HRMS\ConfirmWorkingTimeViewModel.cs" />
+    <Compile Include="HRMS\EmployeeExcel.cs" />
+    <Compile Include="HRMS\EmployeeInfoView.cs" />
+    <Compile Include="HRMS\EmployeeSearch.cs" />
+    <Compile Include="HRMS\FurloughSearchView.cs" />
+    <Compile Include="HRMS\FurloughViewModel.cs" />
+    <Compile Include="HRMS\InfoWorkDay.cs" />
+    <Compile Include="HRMS\OvertimeViewModel.cs" />
+    <Compile Include="HRMS\WorkdayEditViewModel.cs" />
+    <Compile Include="HRMS\WorkdayViewModel.cs" />
+    <Compile Include="Permission\AccountLoginViewModel.cs" />
+    <Compile Include="Permission\AccountResultViewModel.cs" />
+    <Compile Include="Permission\AccountViewModel.cs" />
+    <Compile Include="Permission\AppUserPrincipal.cs" />
+    <Compile Include="Permission\ChangePasswordAccountViewModel.cs" />
+    <Compile Include="Permission\ChangePasswordViewModel.cs" />
+    <Compile Include="MasterData\DepartmentViewModel.cs" />
+    <Compile Include="Permission\FunctionViewModel.cs" />
+    <Compile Include="Permission\MenuViewModel.cs" />
+    <Compile Include="Permission\PageFunctionViewModel.cs" />
+    <Compile Include="Permission\PagePermissionViewModel.cs" />
+    <Compile Include="Permission\PageViewModel.cs" />
+    <Compile Include="Permission\PermissionViewModel.cs" />
+    <Compile Include="Permission\RolesViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Website\AppUserPrincipalWebsite.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Portal.EntityModels\Portal.EntityModels.csproj">
+      <Project>{b25a0be7-9655-4f04-8b63-7b7f5d44e087}</Project>
+      <Name>Portal.EntityModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Portal.Resources\Portal.Resources.csproj">
+      <Project>{4c426c97-958d-48a4-852d-a9a35bbe420e}</Project>
+      <Name>Portal.Resources</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

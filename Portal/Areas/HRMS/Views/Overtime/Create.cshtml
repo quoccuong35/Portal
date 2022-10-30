@@ -1,0 +1,82 @@
+﻿@model OvertimeViewModel
+@{
+    ViewBag.Title = LanguageResource.Create + " " + LanguageResource.Overtime;
+    string CurrentController = ConstController.Overtime;
+    string CurrentArea = ConstArea.HRMS;
+    string CurrentUrl = HtmlExtensions.GetCurrentUrl(CurrentArea, CurrentController);
+
+    var dd = Model;
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-4">
+                    <h4> @ViewBag.Title @HtmlExtensions.BackButton(CurrentArea, CurrentController)</h4>
+                </div>
+                <div class="col-sm-8">
+                    <div class="float-right">
+                        @HtmlExtensions.SaveButton("btn-save", LanguageResource.Btn_Save)
+                        @HtmlExtensions.SaveButton("btn-save-continue", LanguageResource.Btn_SaveAndContinue)
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { @enctype = "multipart/form-data", @id = "frmCreate" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-edit"></i> Thông tin dữ liệu</h3>
+                        </div>
+                        <div class="card-body">
+                            @Html.Partial("_Overtime")
+                            <br />
+                            <div class="form-group">
+                                <div class="col-lg-12 m-b-3">
+                                    <button class="btn btn-success" id="btn-addemployee" type="button"><i class="fa fa-user"></i> Thêm nhân sự</button>
+                                    <button class="btn btn-primary" id="btn-importexcel" type="button"><i class="fa fa-file-import"></i>Lấy danh sách excel</button>
+                                    <a class="btn btn-info" id="btn-export" href="/@CurrentUrl/ExportFilemau"><i class="fa fa-file-excel"></i> File mẫu</a>
+                                </div>
+                                <div class="col-lg-12">
+                                    <input type="text" id="txt-manhanvien" placeholder="MSNV">
+                                    <input type="file" name="uploadedFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" id="importexcelfile">
+                                </div>
+                            </div>
+                           
+                            <div class="col-md-12">
+                                <div class="card card-primary card-outline">
+                                    <div class="card-body table-responsive">
+                                        <div id="detailLst"> @Html.Partial("_OvertimeDetailInfo", Model.OverDetail)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                }
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+@section ScriptsFile {
+<script src="~/Scripts/common/Overtime.js"></script>
+}
+@section CustomScripts {
+    <script>
+        $(document).ready(function () {
+            Portal.CreateInitial("@CurrentUrl");
+            Overtime.Init("@CurrentUrl");
+        });
+    </script>
+}

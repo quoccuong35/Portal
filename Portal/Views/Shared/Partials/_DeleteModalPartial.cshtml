@@ -1,0 +1,35 @@
+﻿@* Delete Confirm *@
+
+<div class="modal fade" id="divDeletePopup"  role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@LanguageResource.Btn_Delete "<span class="item-name"></span>"</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="frmConfirm">
+                @*@Html.AntiForgeryToken()*@
+                @Html.Hidden("id")
+                @Html.Hidden("controller")
+                <div class="modal-body">
+                    <div class="row text-center alert-message">
+                        @LanguageResource.Confirm_ConfirmDelete
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <span class="btn btn-default" data-dismiss="modal" id="btn-cancel-delete">@LanguageResource.Confirm_No</span>
+                    <a class="btn btn-danger pull-right btn-confirm-delete" id="btn-confirm-delete">
+                        <span class='spinner-border spinner-border-sm d-none' role='status' aria-hidden='true'></span>
+                        @LanguageResource.Confirm_Yes
+                    </a>
+                </div>
+            </form>
+           
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

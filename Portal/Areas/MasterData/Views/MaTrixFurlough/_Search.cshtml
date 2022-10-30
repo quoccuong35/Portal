@@ -1,0 +1,49 @@
+﻿@model IEnumerable<MaTrixFurloughModel>
+@{
+    string CurrentController = ConstController.MaTrixFurlough;
+
+    string CurrentArea = ConstArea.MasterData;
+}
+<table id="data-list" class="table table-head-fixed text-nowrap">
+    <thead>
+        <tr>
+            <th class="text-center">@LanguageResource.NumberIndex</th>
+            <th>@Html.DisplayNameFor(p => p.DepartmentID)</th>
+            <th>@Html.DisplayNameFor(p => p.MaTrixFurloughName)</th>
+            <th>@Html.DisplayNameFor(p => p.FromDay)</th>
+            <th>@Html.DisplayNameFor(p => p.ToDay)</th>
+            <th>@Html.DisplayNameFor(p => p.ApprovalLevel)</th>
+            <th>@Html.DisplayNameFor(p => p.ApprovalName)</th>
+            <th>@Html.DisplayNameFor(p => p.Note)</th>
+            <th class="text-center">@Html.DisplayNameFor(p => p.Actived)</th>
+            <th class="text-center">@LanguageResource.Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int i = 0; }
+        @foreach (var item in Model)
+        {
+            i++;
+            <tr>
+                <td class="text-center">@i</td>
+                <td>@Html.DisplayFor(p => item.Department.DepartmentName)</td>
+                <td>@Html.DisplayFor(p => item.MaTrixFurloughName)</td>
+                <td>@Html.DisplayFor(p => item.FromDay)</td>
+                <td>@Html.DisplayFor(p => item.ToDay)</td>
+                <td>@Html.DisplayFor(p => item.ApprovalLevel)</td>
+                <td>@Html.DisplayFor(p => item.ApprovalName)</td>
+                <td>@Html.DisplayFor(p => item.Note)</td>
+                <td class="text-center">@HtmlExtensions.ActivedIcon(item.Actived)</td>
+                <td class="text-center">
+                    @HtmlExtensions.EditButton(CurrentArea, CurrentController, item.MaTrixFurloughID)
+                    @HtmlExtensions.DeleteButton(CurrentArea, CurrentController, item.MaTrixFurloughName, item.MaTrixFurloughID)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(function () {
+        Portal.TableEdit();
+    });
+</script>

@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Position>
+@{
+    string CurrentController = ConstController.Position;
+    string CurrentArea = ConstArea.MasterData;
+}
+<table id="data-list" class="table table-head-fixed text-nowrap">
+    <thead>
+        <tr>
+            <th class="text-center">@LanguageResource.NumberIndex</th>
+            <th>@Html.DisplayNameFor(p => p.PositionCode)</th>
+            <th>@Html.DisplayNameFor(p => p.PositionName)</th>
+            <th>@Html.DisplayNameFor(p => p.OrderIndex)</th>
+            <th class="text-center">@Html.DisplayNameFor(p => p.Actived)</th>
+            <th class="text-center">@LanguageResource.Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int i = 0; }
+        @foreach (var item in Model)
+        {
+            i++;
+            <tr>
+                <td class="text-center">@i</td>
+                <td>@Html.DisplayFor(p => item.PositionCode)</td>
+                <td>@Html.DisplayFor(p => item.PositionName)</td>
+                <td class="text-center">@Html.DisplayFor(p => item.OrderIndex)</td>
+                <td class="text-center">@HtmlExtensions.ActivedIcon(item.Actived)</td>
+                <td class="text-center">
+                    @HtmlExtensions.EditButton(CurrentArea, CurrentController, item.PositionID)
+                    @HtmlExtensions.DeleteButton(CurrentArea, CurrentController, item.PositionName, item.PositionID)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(function () {
+        Portal.TableEdit();
+    });
+</script>

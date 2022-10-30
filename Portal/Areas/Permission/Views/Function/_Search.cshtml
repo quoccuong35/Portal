@@ -1,0 +1,37 @@
+﻿@model IEnumerable<FunctionModel>
+@{
+    string CurrentController = ConstController.Function;
+    string CurrentArea = ConstArea.Permission;
+}
+
+<table id="data-list" class="table table-head-fixed text-nowrap">
+    <thead>
+        <tr>
+            <th class="text-center">@LanguageResource.NumberIndex</th>
+            <th>@Html.DisplayNameFor(p => p.FunctionId)</th>
+            <th class="text-center">@Html.DisplayNameFor(p => p.FunctionName)</th>
+            <th class="text-center">@LanguageResource.Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int i = 0; }
+        @foreach (var item in Model)
+        {
+            i++;
+            <tr>
+                <td class="text-center">@i</td>
+                <td>@Html.DisplayFor(p => item.FunctionId)</td>
+                <td class="text-center">@Html.DisplayFor(p => item.FunctionName)</td>
+                <td class="text-center">
+                    @HtmlExtensions.EditButton(CurrentArea, CurrentController, item.FunctionId)
+                    @HtmlExtensions.DeleteButton(CurrentArea, CurrentController, item.FunctionName, item.FunctionId)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(function () {
+        Portal.TableEdit();
+    });
+</script>

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<TimeKeepingPeriodModel>
+@{
+    string CurrentController = ConstController.TimeKeepingPeriod;
+
+    string CurrentArea = ConstArea.HRMS;
+}
+<table id="data-list" class="table table-head-fixed text-nowrap">
+    <thead>
+        <tr>
+            <th class="text-center">@LanguageResource.Actions</th>
+            <th>@Html.DisplayNameFor(p => p.FromDate)</th>
+            <th>@Html.DisplayNameFor(p => p.ToDate)</th>
+            <th>@Html.DisplayNameFor(p => p.Type)</th>
+            <th class="text-center">@Html.DisplayNameFor(p => p.Actived)</th>
+            <th class="text-center">@Html.DisplayNameFor(p => p.Descriptions)</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td class="text-center">
+                @HtmlExtensions.EditButton(CurrentArea, CurrentController, item.ID)
+                @HtmlExtensions.DeleteButton(CurrentArea, CurrentController, @item.Type.Replace("1", "Kỳ công người dùng").Replace("2", "Kỳ tính công"), item.ID)
+            </td>
+            <td>@item.FromDate.ToString("dd/MM/yyyy")</td>
+            <td>@item.ToDate.ToString("dd/MM/yyyy")</td>
+            <td>@item.Type.Replace("1", "Kỳ công người dùng").Replace("2", "Kỳ tính công")</td>
+            <td class="text-center">@HtmlExtensions.ActivedIcon(item.Actived)</td>
+            <td>@item.Descriptions</td>
+
+        </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(function () {
+        Portal.TableEdit();
+    });
+</script>

@@ -1,0 +1,66 @@
+﻿@model ShiftWork
+@{
+    ViewBag.Title = LanguageResource.Edit + " " + LanguageResource.ShiftWork;
+    string CurrentController = ConstController.ShiftWork;
+    string CurrentArea = ConstArea.MasterData;
+    string CurrentUrl = HtmlExtensions.GetCurrentUrl(CurrentArea, CurrentController);
+}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-4">
+                    <h4> @ViewBag.Title @HtmlExtensions.BackButton(CurrentArea, CurrentController)</h4>
+                </div>
+                <div class="col-sm-8">
+                    <div class="float-right">
+                        @HtmlExtensions.SaveButton("btn-save", LanguageResource.Btn_Save)
+                        @HtmlExtensions.SaveButton("btn-save-continue", LanguageResource.Btn_SaveAndContinue)
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { @enctype = "multipart/form-data", @id = "frmEdit" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(p => p.ShiftWorkId);
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-edit"></i> Thông tin dữ liệu</h3>
+                        </div>
+                        <div class="card-body">
+                            @Html.Partial("_ShiftWork", Model)
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                }
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+@section CustomScripts {
+    <script>
+        $.validator.methods.range = function (value, element, param) {
+            var globalizedValue = value.replace(",", ".");
+            return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
+        }
+        $.validator.methods.number = function (value, element) {
+            return this.optional(element) || /-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+        }
+        
+        //load default and set event
+        $(document).ready(function () {
+            Portal.EditInitial("@CurrentUrl");
+        });
+    </script>
+}

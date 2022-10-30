@@ -1,0 +1,76 @@
+﻿@model WorkPlace
+@{
+    ViewBag.Title = LanguageResource.Create + " " + LanguageResource.Workplace;
+    string CurrentController = ConstController.Workplace;
+    string CurrentArea = ConstArea.MasterData;
+    string CurrentUrl = HtmlExtensions.GetCurrentUrl(CurrentArea, CurrentController);
+}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-4">
+                    <h4> @ViewBag.Title @HtmlExtensions.BackButton(CurrentArea, CurrentController)</h4>
+                </div>
+                <div class="col-sm-8">
+                    <div class="float-right">
+                        @HtmlExtensions.SaveButton("btn-save", LanguageResource.Btn_Save)
+                        @HtmlExtensions.SaveButton("btn-save-continue", LanguageResource.Btn_SaveAndContinue)
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { @enctype = "multipart/form-data", @id = "frmCreate" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-edit"></i> Thông tin dữ liệu</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @Html.TooltipLabelForRequired(p => p.WorkPlaceName)
+                                    @Html.RequiredTextboxFor(p => p.WorkPlaceName, new { @class = "form-control" })
+
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TooltipLabelForRequired(p => p.Actived)
+                                    @Html.ActivedRadioButton(p => p.Actived)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TooltipLabelForRequired(p => p.OrderIndex)
+                                    @Html.RequiredTextboxFor(p => p.OrderIndex, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.TooltipLabelForRequired(p => p.Description)
+                                    @Html.TextAreaFor(p => p.Description, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                }
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+@section CustomScripts {
+    <script>
+        //load default and set event
+        $(document).ready(function () {
+            Portal.CreateInitial("@CurrentUrl");
+        });
+    </script>
+}

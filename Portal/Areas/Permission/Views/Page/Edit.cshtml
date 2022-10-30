@@ -1,0 +1,112 @@
+﻿@model Portal.ViewModels.PageFunctionViewModel
+@using MvcCheckBoxList.Model
+
+@{
+    ViewBag.Title = LanguageResource.Update + " " + LanguageResource.Permission_PageModel.ToLower();
+    string CurrentController = ConstController.Page;
+    string CurrentArea = ConstArea.Permission;
+
+    string CurrentUrl = HtmlExtensions.GetCurrentUrl(CurrentArea, CurrentController);
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-4">
+                    <h4> @ViewBag.Title @HtmlExtensions.BackButton(CurrentArea, CurrentController)</h4>
+
+                </div>
+                <div class="col-sm-8">
+                    <div class="float-right">
+                        @HtmlExtensions.SaveButton("btn-save", LanguageResource.Btn_Save)
+                        @HtmlExtensions.SaveButton("btn-save-continue", LanguageResource.Btn_SaveAndContinue)
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                @using (Html.BeginForm("Edit", null, FormMethod.Post, new { @enctype = "multipart/form-data", @id = "frmEdit" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(p => p.PageId)
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-edit"></i> Thông tin dữ liệu</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    @Html.TooltipLabelForRequired(p => p.PageName)
+                                    @Html.RequiredTextboxFor(p => p.PageName, new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-5">
+                                    @Html.TooltipLabelForRequired(p => p.PageUrl)
+                                    @Html.RequiredTextboxFor(p => p.PageUrl, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    @Html.TooltipLabelFor(p => p.MenuId)
+                                    @Html.DropDownList("MenuId", null, LanguageResource.Dropdownlist_Menu, new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-5">
+                                    @Html.TooltipLabelForRequired(p => p.OrderIndex)
+                                    @Html.RequiredTextboxFor(p => p.OrderIndex, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @Html.TooltipLabelFor(p => p.Icon)
+                                    @Html.RequiredTextboxFor(p => p.Icon, new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TooltipLabelForRequired(p => p.Actived)
+                                    @Html.ActivedRadioButton(p => p.Actived)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TooltipLabelForRequired(p => p.isQuickAccess)
+                                    @Html.ActivedRadioButton(p => p.isQuickAccess)
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <div class="label-wrapper"><label class="control-label" for="FunctionId">Thao tác</label></div>
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CheckBoxListFor(p => p.FunctionId,
+                                                      p => p.FunctionList,
+                                                      p1 => p1.FunctionId,
+                                                      p1 => p1.FunctionName,
+                                                      p => p.ActivedFunctionList,
+                                                      MvcCheckBoxList.Model.Position.Horizontal,
+                                                      p => new { @class = "chkBox" })
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                }
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+@section CustomScripts {
+    <script>
+        //load default and set event
+        $(document).ready(function () {
+            Portal.EditInitial("@CurrentUrl");
+        });
+    </script>
+}

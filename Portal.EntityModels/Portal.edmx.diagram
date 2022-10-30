@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7efa7e0b07aa4509bacbd278043d3726" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="PortalModel.Account" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PortalModel.DepartmentCategory" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PortalModel.HistoryModel" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="PortalModel.PagePermissionModel" Width="1.5" PointX="9.75" PointY="8.125" />
+        <EntityTypeShape EntityType="PortalModel.MenuModel" Width="1.5" PointX="0.5" PointY="7.875" />
+        <EntityTypeShape EntityType="PortalModel.FunctionModel" Width="1.5" PointX="4.125" PointY="8.5" />
+        <EntityTypeShape EntityType="PortalModel.PageModel" Width="1.5" PointX="1.625" PointY="10.375" />
+        <AssociationConnector Association="PortalModel.FK_PagePermissionModel_PagePermissionModel" />
+        <AssociationConnector Association="PortalModel.FK_PageModel_MenuModel" />
+        <AssociationConnector Association="PortalModel.FK_PagePermissionModel_PageModel" />
+        <AssociationConnector Association="PortalModel.PageFunctionModel" />
+        <EntityTypeShape EntityType="PortalModel.DataModel" Width="1.5" PointX="6.375" PointY="5.75" />
+        <EntityTypeShape EntityType="PortalModel.RolesModel" Width="1.5" PointX="8.375" PointY="1.25" />
+        <EntityTypeShape EntityType="PortalModel.TabConfigModel" Width="1.5" PointX="7" PointY="9.75" />
+        <AssociationConnector Association="PortalModel.FK_PagePermissionModel_RolesModel" ManuallyRouted="true" >
+          <ConnectorPoint PointX="9.875" PointY="2.6350325595616795" />
+          <ConnectorPoint PointX="10.25" PointY="4.3733373413461534" />
+          <ConnectorPoint PointX="10.25" PointY="7.7811610515170644" />
+          <ConnectorPoint PointX="10.118268668502422" PointY="7.7811610515170644" />
+          <ConnectorPoint PointX="10.446759636387398" PointY="8.00125" />
+          <ConnectorPoint PointX="10.270832833333335" PointY="8.00125" />
+          <ConnectorPoint PointX="10.104166166666667" PointY="8.00125" />
+          <ConnectorPoint PointX="9.75" PointY="8.00125" />
+          <ConnectorPoint PointX="9.75" PointY="8.125" />
+        </AssociationConnector>
+        <AssociationConnector Association="PortalModel.AccountInRoleModel" />
+        <AssociationConnector Association="PortalModel.DataPermissionModel" />
+        <AssociationConnector Association="PortalModel.RolesInTabModel" />
+        <EntityTypeShape EntityType="PortalModel.Department" Width="1.5" PointX="3.375" PointY="4.75" />
+        <EntityTypeShape EntityType="PortalModel.Position" Width="1.5" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="PortalModel.WorkPlace" Width="1.5" PointX="9.375" PointY="11.75" />
+        <EntityTypeShape EntityType="PortalModel.EmployeeStatusCategory" Width="1.5" PointX="11.625" PointY="4.375" />
+        <EntityTypeShape EntityType="PortalModel.ShiftWork" Width="1.5" PointX="5.5" PointY="11.875" />
+        <EntityTypeShape EntityType="PortalModel.Folk" Width="1.5" PointX="11.375" PointY="11.75" />
+        <EntityTypeShape EntityType="PortalModel.Religion" Width="1.5" PointX="12.375" PointY="6.75" />
+        <EntityTypeShape EntityType="PortalModel.Education" Width="1.5" PointX="8.375" PointY="4.75" />
+        <EntityTypeShape EntityType="PortalModel.Nationality" Width="1.5" PointX="13.375" PointY="10.75" />
+        <EntityTypeShape EntityType="PortalModel.LeaveCategory" Width="1.5" PointX="0.75" PointY="14.75" />
+        <EntityTypeShape EntityType="PortalModel.Bank" Width="1.5" PointX="13.375" PointY="15" />
+        <EntityTypeShape EntityType="PortalModel.EmployeeModel" Width="1.5" PointX="15.625" PointY="3.5" />
+        <AssociationConnector Association="PortalModel.FK_EmployeeModel_Bank" />
+        <AssociationConnector Association="PortalModel.FK_EmployeeModel_Department" />
+        <AssociationConnector Association="PortalModel.FK_EmployeeModel_Education" />
+        <AssociationConnector Association="PortalModel.FK_EmployeeModel_EmployeeStatusCategory" />
+        <AssociationConnector Association="PortalModel.FK_EmployeeModel_Folk" />
+        <AssociationConnector Association="PortalModel.FK_EmployeeModel_Nationality" />
+        <AssociationConnector Association="PortalModel.FK_EmployeeModel_Position" />
+        <AssociationConnector Association="PortalModel.FK_EmployeeModel_Religion" />
+        <AssociationConnector Association="PortalModel.FK_EmployeeModel_ShiftWork" />
+        <AssociationConnector Association="PortalModel.FK_EmployeeModel_WorkPlace" />
+        <AssociationConnector Association="PortalModel.FK_EmployeeModel_EmployeeModel" />
+        <EntityTypeShape EntityType="PortalModel.FurloughDetailModel" Width="1.5" PointX="17.625" PointY="17.75" />
+        <EntityTypeShape EntityType="PortalModel.BrowseStatusModel" Width="1.5" PointX="15.625" PointY="0.875" />
+        <AssociationConnector Association="PortalModel.FK_Account_EmployeeModel" />
+        <EntityTypeShape EntityType="PortalModel.MaTrixFurloughModel" Width="1.5" PointX="5.625" PointY="17.5" />
+        <AssociationConnector Association="PortalModel.FK_MaTrixFurloughModel_Department" />
+        <EntityTypeShape EntityType="PortalModel.OvertimeDetailModel" Width="1.5" PointX="20.125" PointY="5.75" />
+        <AssociationConnector Association="PortalModel.FK_OvertimeDetailModel_EmployeeModel" />
+        <EntityTypeShape EntityType="PortalModel.MatrixOvertimeModel" Width="1.875" PointX="10.625" PointY="20" />
+        <EntityTypeShape EntityType="PortalModel.OvertimeCategory" Width="1.5" PointX="8.375" PointY="20" />
+        <AssociationConnector Association="PortalModel.FK_EmployeeModel_OvertimeCategory" />
+        <AssociationConnector Association="PortalModel.FK_MatrixOvertimeModel_OvertimeCategory" />
+        <EntityTypeShape EntityType="PortalModel.ApprovalHistoryModel" Width="1.5" PointX="20.125" PointY="9.75" />
+        <AssociationConnector Association="PortalModel.FK_ApprovalHistoryModel_AccountEdit" />
+        <AssociationConnector Association="PortalModel.FK_ApprovalHistoryModel_BrowseStatusModel" />
+        <AssociationConnector Association="PortalModel.FK_ApprovalHistoryModel_EmployeeModel" />
+        <AssociationConnector Association="PortalModel.FK_ApprovalHistoryModel_MaTrixFurloughModel" />
+        <AssociationConnector Association="PortalModel.FK_ApprovalHistoryModel_MatrixOvertimeModel" />
+        <EntityTypeShape EntityType="PortalModel.ConfirmWorkingTimeModel" Width="1.5" PointX="22.875" PointY="5" />
+        <AssociationConnector Association="PortalModel.FK_ApprovalHistoryModel_ConfirmWorkingTimeModel" />
+        <AssociationConnector Association="PortalModel.FK_ConfirmWorkingTime_BrowseStatusModel" />
+        <AssociationConnector Association="PortalModel.FK_ConfirmWorkingTime_EmployeeModel" />
+        <EntityTypeShape EntityType="PortalModel.OvertimeModel" Width="1.5" PointX="17.875" PointY="2.25" />
+        <AssociationConnector Association="PortalModel.FK_OvertimeModel_Account" />
+        <AssociationConnector Association="PortalModel.FK_ApprovalHistoryModel_OvertimeModel" />
+        <AssociationConnector Association="PortalModel.FK_OvertimeDetailModel_OvertimeModel" />
+        <AssociationConnector Association="PortalModel.FK_OvertimeModel_BrowseStatusModel" />
+        <AssociationConnector Association="PortalModel.FK_OvertimeModel_Department" />
+        <EntityTypeShape EntityType="PortalModel.FurloughModel" Width="1.5" PointX="17.875" PointY="8" />
+        <AssociationConnector Association="PortalModel.FK_ApprovalHistoryModel_FurloughModel" />
+        <AssociationConnector Association="PortalModel.FK_FurloughModel_EmployeeModel" />
+        <AssociationConnector Association="PortalModel.FK_FurloughDetailModel_FurloughModel" />
+        <AssociationConnector Association="PortalModel.FK_FurloughModel_FurloughModel" />
+        <AssociationConnector Association="PortalModel.FK_FurloughModel_LeaveCategory" />
+        <EntityTypeShape EntityType="PortalModel.TimeKeepingPeriodModel" Width="1.5" PointX="10.375" PointY="15.75" />
+        <EntityTypeShape EntityType="PortalModel.HoliDayModel" Width="1.5" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="PortalModel.RALog" Width="1.5" PointX="0.75" PointY="18.75" />
+        <EntityTypeShape EntityType="PortalModel.WorkdayEditModel" Width="1.5" PointX="13.375" PointY="19.75" />
+        <EntityTypeShape EntityType="PortalModel.EmployeeSpecialModel" Width="1.5" PointX="17.875" PointY="22" />
+        <AssociationConnector Association="PortalModel.FK_ConfirmWorkingTimeModel_ShiftWork" />
+        <AssociationConnector Association="PortalModel.FK_EmployeeSpecialModel_EmployeeModel" />
+        <EntityTypeShape EntityType="PortalModel.RalogNight" Width="1.5" PointX="20.375" PointY="0.75" />
+        <AssociationConnector Association="PortalModel.FK_WorkdayEditModel_EmployeeModel" />
+        <AssociationConnector Association="PortalModel.FK_WorkdayEditModel_ShiftWork" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<PageModel>
+@{
+    string CurrentController = ConstController.Page;
+    string CurrentArea = ConstArea.Permission;
+}
+
+<table id="data-list" class="table table-head-fixed text-nowrap">
+    <thead>
+        <tr>
+            <th class="text-center">@LanguageResource.NumberIndex</th>
+            <th>@Html.DisplayNameFor(p => p.PageName)</th>
+            <th>@Html.DisplayNameFor(p => p.PageUrl)</th>
+            <th>@Html.DisplayNameFor(p => p.MenuId)</th>
+            <th class="text-center">@Html.DisplayNameFor(p => p.OrderIndex)</th>
+            <th class="text-center">@Html.DisplayNameFor(p => p.Icon)</th>
+            <th class="text-center">@Html.DisplayNameFor(p => p.Actived)</th>
+            <th class="text-center">@LanguageResource.Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int i = 0; }
+        @foreach (var item in Model)
+        {
+            i++;
+            <tr>
+                <td class="text-center">@i</td>
+                <td>@Html.DisplayFor(p => item.PageName)</td>
+                <td>@Html.DisplayFor(p => item.PageUrl)</td>
+                <td>@Html.DisplayFor(p => item.MenuModel.MenuName)</td>
+                <td class="text-center">@Html.DisplayFor(p => item.OrderIndex)</td>
+                <td class="text-center">
+                    <i class="@Html.DisplayFor(p => item.Icon)"></i>
+                </td>
+                <td class="text-center">@HtmlExtensions.ActivedIcon(item.Actived)</td>
+                <td class="text-center">
+                    @HtmlExtensions.EditButton(CurrentArea, CurrentController, item.PageId)
+                    @HtmlExtensions.DeleteButton(CurrentArea, CurrentController, item.PageName, item.PageId)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(function () {
+        Portal.TableEdit();
+    });
+</script>

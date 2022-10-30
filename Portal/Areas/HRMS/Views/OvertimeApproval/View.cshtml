@@ -1,0 +1,88 @@
+﻿@model OvertimeViewModel
+@{
+    ViewBag.Title = LanguageResource.Btn_View + " " + LanguageResource.OvertimeApproval;
+    string CurrentController = ConstController.OvertimeApproval;
+    string CurrentArea = ConstArea.HRMS;
+    string CurrentUrl = HtmlExtensions.GetCurrentUrl(CurrentArea, CurrentController);
+}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-4">
+                    <h4> @ViewBag.Title @HtmlExtensions.BackButton(CurrentArea, CurrentController)</h4>
+                </div>
+                <div class="col-sm-8">
+                    <div class="float-right">
+                        @HtmlExtensions.ApprovalButton(CurrentArea, ConstController.OvertimeApproval, Model.OvertimeId)
+                        @HtmlExtensions.CancelButton(CurrentArea, ConstController.OvertimeApproval, Model.OvertimeId)
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { @enctype = "multipart/form-data", @id = "frmEdit" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(p => p.OvertimeId)
+                    <div class="card card-primary card-tabs">
+                        <div class="card-header p-0 pt-1">
+                            <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="custom-tabs-one-chung-tab" data-toggle="pill" href="#custom-tabs-one-chung" role="tab" aria-controls="custom-tabs-one-chung" aria-selected="true">Thông tin dữ liệu</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="custom-tabs-one-bosung-tab" data-toggle="pill" href="#custom-tabs-one-bosung" role="tab" aria-controls="custom-tabs-one-bosung" aria-selected="false">Thông tin duyệt</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="custom-tabs-one-chung" role="tabpanel" aria-labelledby="custom-tabs-one-chung-tab">
+                                    @Html.Partial("~/Areas/HRMS/Views/Overtime/_Overtime.cshtml")
+                                    <br />
+                                    <div class="col-md-12">
+                                        <div class="card card-primary card-outline">
+                                            <div class="card-body table-responsive">
+                                                <div id="detailLst"> @Html.Partial("~/Areas/HRMS/Views/Overtime/_OvertimeDetailInfo.cshtml", Model.OverDetail)</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="custom-tabs-one-bosung" role="tabpanel" aria-labelledby="custom-tabs-one-bosung-tab">
+                                    <div class="col-md-12">
+                                        <div class="card card-primary card-outline">
+                                            <div class="card-body table-responsive">
+                                                <div id="detailLst">@Html.Partial("_AppHistory", Model.AppHistory)</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                }
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+@section ScriptsFile {
+    <script src="~/Scripts/common/Overtime.js"></script>
+}
+@section CustomScripts {
+    <script>
+        $(document).ready(function () {
+            Portal.Approval();
+            Portal.Cancel();
+        });
+    </script>
+}

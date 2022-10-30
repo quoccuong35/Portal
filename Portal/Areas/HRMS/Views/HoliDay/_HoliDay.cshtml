@@ -1,0 +1,15 @@
+﻿@model HoliDayModel
+<div class="row">
+    <div class="col-lg-4">
+        @Html.TooltipLabelForRequired(p => p.Date1)
+        @Html.RequiredDateboxFor(p => p.Date1, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+    </div>
+    <div class="col-md-4">
+        @Html.TooltipLabelForRequired(p => p.Actived)
+        @Html.ActivedRadioButton(p => p.Actived)
+    </div>
+</div>
+<div class="col-lg-12">
+    @Html.TooltipLabelForRequired(p => p.Name)
+    @Html.TextAreaFor(p => p.Name, new { @class = "form-control" })
+</div>

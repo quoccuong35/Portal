@@ -1,0 +1,50 @@
+﻿@model IEnumerable<EmployeeModel>
+@{
+    string CurrentController = ConstController.EmployeeModel;
+
+    string CurrentArea = ConstArea.HRMS;
+}
+<table id="data-list" class="table table-head-fixed text-nowrap tbl-data-list ">
+    <thead>
+        <tr>
+
+            <th>@Html.DisplayNameFor(p => p.EmployeeCode)</th>
+            <th>@Html.DisplayNameFor(p => p.TimekeepingCode)</th>
+            <th>@Html.DisplayNameFor(p => p.FullName)</th>
+            <th>@Html.DisplayNameFor(p => p.PositionID)</th>
+            <th>@Html.DisplayNameFor(p => p.DepartmentID)</th>
+            <th>@Html.DisplayNameFor(p => p.Gender)</th>
+            <th>@Html.DisplayNameFor(p => p.DateOfBirth)</th>
+            <th class="text-center">@LanguageResource.Actions</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+
+            <td>@item.EmployeeCode</td>
+            <td>@item.TimekeepingCode</td>
+            <td>@item.FullName</td>
+            <td>@item.Position.PositionName</td>
+            <td>@item.Department.DepartmentName</td>
+            <td class="text-center"> @{
+                string gioiTinh = item.Gender?"Nam":"Nữ";
+            } @gioiTinh</td>
+            <td class="text-center">@item.DateOfBirth</td>
+            <td class="text-center">
+                @HtmlExtensions.ViewButton(CurrentArea, CurrentController, item.EmployeeId)
+                @HtmlExtensions.EditButton(CurrentArea, CurrentController, item.EmployeeId)
+                @HtmlExtensions.DeleteButton(CurrentArea, CurrentController, item.FullName, item.EmployeeId)
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(function () {
+        Portal.TableEdit('data-list',50,0,1,"single");
+    });
+</script>

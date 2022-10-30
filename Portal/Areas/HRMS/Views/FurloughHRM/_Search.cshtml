@@ -1,0 +1,47 @@
+﻿@model IEnumerable<FurloughModel>
+@{
+    string CurrentController = ConstController.FurloughHRM;
+
+    string CurrentArea = ConstArea.HRMS;
+}
+<table id="data-list" class="table table-head-fixed text-nowrap">
+    <thead>
+        <tr>
+            <th class="text-center">@LanguageResource.Actions</th>
+            <th>@LanguageResource.EmployeeCode</th>
+            <th>@LanguageResource.Customer_FullName</th>
+            <th>@LanguageResource.BrowseStatusID</th>
+            <th>@LanguageResource.Department</th>
+            <th>@LanguageResource.FromDate</th>
+            <th>@LanguageResource.ToDate</th>
+            <td>@LanguageResource.NumberOfDaysOff</td>
+            <th>@LanguageResource.LeaveCategory</th>
+            <th>@LanguageResource.Reason</th>
+            <th>@LanguageResource.ReasonStop</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td> @HtmlExtensions.EditButton(CurrentArea, CurrentController, item.FurloughId)</td>
+            <td>@item.EmployeeModel.EmployeeCode</td>
+            <td>@item.EmployeeModel.FullName</td>
+            <td>@item.BrowseStatusModel.BrowseStatusName</td>
+            <td>@item.EmployeeModel.Department.DepartmentName</td>
+            <td>@item.FromDate.ToString("dd/MM/yyyy")</td>
+            <td>@item.ToDate.ToString("dd/MM/yyyy")</td>
+            <td>@item.NumberOfDaysOff</td>
+            <td>@item.LeaveCategory.LeaveCategoryName</td>
+
+            <td>@item.Reason</td>
+            <td>@item.ReasonStop</td>
+        </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(function () {
+        Portal.TableEdit();
+    });
+</script>

@@ -1,0 +1,141 @@
+﻿@model FurloughSearchView
+@{
+    ViewBag.Title = LanguageResource.Workday;
+    string CurrentController = ConstController.Workday;
+    string CurrentArea = ConstArea.HRMS;
+    string CurrentUrl = HtmlExtensions.GetCurrentUrl(CurrentArea, CurrentController);
+}
+<style>
+    .select-checkbox {
+        width: 23px;
+        height: 23px;
+    }
+    .dataTables_scrollBody {
+        height:350px
+    }
+</style>
+<div class="content-wrapper layout-fixed">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-lg-8">
+                    <h4 class="m-0 text-dark"> @ViewBag.Title</h4>
+                </div>
+                <div class="col-lg-4">
+                    <div class="float-right">
+                        @HtmlExtensions.CreateButton(CurrentArea, CurrentController)
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                @using (Html.BeginForm("_Search", null, FormMethod.Post, new { @id = "frmSearch" }))
+                {
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-search-plus"></i> Tìm kiếm</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    @Html.TooltipLabelFor(p => p.DepartmentID)
+                                    @Html.DropDownList("DepartmentID", null, LanguageResource.Dropdownlist_All, new { @class = "form-control with-search" })
+                                </div>
+                                <div class="col-lg-2">
+                                    @Html.TooltipLabelFor(p => p.EmployeeCode)
+                                    @Html.TextBoxFor(p => p.EmployeeCode, new { @class = "form-control" })
+                                </div>
+                                <div class="col-lg-3">
+                                    @Html.TooltipLabelFor(p => p.FullName)
+                                    @Html.TextBoxFor(p => p.FullName, new { @class = "form-control" })
+                                </div>
+                                <div class="col-lg-2">
+                                    @Html.TooltipLabelFor(p => p.FromDate)
+                                    @Html.RequiredTextboxFor(p => p.FromDate, new { @class = "form-control", @type = "date" })
+                                </div>
+                                <div class="col-lg-2">
+                                    @Html.TooltipLabelFor(p => p.ToDate)
+                                    @Html.RequiredTextboxFor(p => p.ToDate, new { @class = "form-control", @type = "date" })
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            @HtmlExtensions.SearchButton()
+                        </div>
+                        <!-- /.card-footer-->
+                    </div>
+                }
+            </div>
+            <div class="col-md-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-body">
+                        <div id="divSearchResult"></div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+@section CustomScripts {
+    <script>
+        //load default and set event
+        $(document).ready(function () {
+            Portal.SearchInitial("@CurrentUrl");
+            Portal.ShowMessage(window.location.href);
+        });
+        $(document).on("change", ".WorkdayEdit", function (e) {
+            var employeeId = $(this).data("employeeid");
+            var day = $(this).data("day");
+            var value = $(this).val();
+            name = $(this).attr("name");
+            SaveData(day, employeeId, name, value);
+        });
+        function SaveData(day, employeeID, name,value) {
+            var data = {};
+            data.Name = name;
+            data.Day = day;
+            data.EmployeeID = employeeID
+            data.Value = value;
+            data.__RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+            $.ajax({
+                type: "POST",
+                url: "/" + "@CurrentUrl" + "/Edit",
+                data: data,
+                success: function (jsonData) {
+                    if (jsonData.Success == true) {
+                        ShowToast.success(jsonData.Data, 1000);
+                    }
+                    else {
+                        if (jsonData.Data != null && jsonData.Data != "") {
+                            ShowToast.error(jsonData.Data, 1000);
+                        }
+                        else if (jsonData.indexOf("from-login-error") > 0) {
+                            ShowToast.error('Hết thời gian thao tác xin đăng nhập lại', 1000);
+                            setTimeout(function () {
+                                var url = window.location.href.toString().split(window.location.host)[1];
+                                window.location.href = "/Permission/Auth/Login?returnUrl=" + url;
+                            }, 1000);
+                        }
+                    }
+                },
+                error: function (xhr, status, error) {
+                    ShowToast.error(xhr.responseText, 500);
+                }
+            });
+        }
+    </script>
+}

@@ -1,0 +1,93 @@
+﻿@model Portal.ViewModels.AccountViewModel
+@using MvcCheckBoxList.Model
+
+@{
+    ViewBag.Title = LanguageResource.Edit + " " + LanguageResource.Permission_AccountModel.ToLower();
+    string CurrentController = ConstController.Account;
+    string CurrentArea = ConstArea.Permission;
+
+    string CurrentUrl = HtmlExtensions.GetCurrentUrl(CurrentArea, CurrentController);
+}
+
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-4">
+                    <h4> @ViewBag.Title @HtmlExtensions.BackButton(CurrentArea, CurrentController)</h4>
+
+                </div>
+                <div class="col-sm-8">
+                    <div class="float-right">
+                        @HtmlExtensions.SaveButton("btn-save", LanguageResource.Btn_Save)
+                        @HtmlExtensions.SaveButton("btn-save-continue", LanguageResource.Btn_SaveAndContinue)
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { @enctype = "multipart/form-data", @id = "frmEdit" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
+                    <input type="hidden" name="isContinue" id="isContinue" value="@ViewBag.isContinue" />
+                    <input type="hidden" name="Data" id="Data" value="@ViewBag.Data" />
+
+                    @Html.HiddenFor(p => p.AccountId)
+                    @Html.HiddenFor(p => p.Password)
+                    @Html.Hidden("retypePassword", Model.Password)
+                    @Html.Hidden("UserNameValid", Model.UserName)
+                    @Html.Hidden("EmployeeCodeValid", Model.EmployeeCode)
+
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-edit"></i> Thông tin dữ liệu</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @Html.TooltipLabelForRequired(p => p.UserName)
+                                    @Html.RequiredTextboxFor(p => p.UserName, new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TooltipLabelForRequired(p => p.Password)
+                                    @Html.RequiredTextboxFor(p => p.Password, new { @type = "password", @disabled = "disabled" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TooltipLabelForRequired(p => p.Actived)
+                                    @Html.ActivedRadioButton(p => p.Actived)
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.TooltipLabelFor(p => p.RolesModels): &nbsp;
+                                    @Html.CheckBoxListFor(p => p.RolesId, p => p.RolesList, p1 => p1.RolesId, p1 => p1.RolesName, p => p.ActivedRolesList, MvcCheckBoxList.Model.Position.Horizontal, p => new { @class = "chkBox" })
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                }
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+@section CustomScripts {
+    <script>
+        //load default and set event
+        $(document).ready(function () {
+            Portal.EditInitial("@CurrentUrl");
+        });
+    </script>
+}

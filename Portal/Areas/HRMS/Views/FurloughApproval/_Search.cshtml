@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ApprovalHistoryModel>
+@{
+    string CurrentController = ConstController.FurloughApproval;
+
+    string CurrentArea = ConstArea.HRMS;
+}
+<table id="data-list" class="table table-head-fixed text-nowrap">
+    <thead>
+        <tr>
+            <th>@LanguageResource.Actions</th>
+            <td style="display:none">ID</td>
+            <th>@LanguageResource.EmployeeCode</th>
+            <th>@LanguageResource.FullName</th>
+            <th>@LanguageResource.Department</th>
+            <th>@LanguageResource.FromDate</th>
+            <th>@LanguageResource.ToDate</th>
+            <th>@LanguageResource.NumberOfDaysOff</th>
+            <th>@LanguageResource.LeaveCategory</th>
+            <th>@LanguageResource.Reason</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+         {
+        <tr>
+            <td> @HtmlExtensions.ViewButton(CurrentArea, CurrentController, item.FurloughModel.FurloughId)</td>
+            <td style="display:none">@item.FurloughModel.FurloughId.ToString()</td>
+            <td>
+                @item.FurloughModel.EmployeeModel.EmployeeCode
+            </td>
+            <td>@item.FurloughModel.EmployeeModel.FullName</td>
+            <td>@item.FurloughModel.EmployeeModel.Department.DepartmentName</td>
+            <td>@item.FurloughModel.FromDate.ToString("dd/MM/yyyy")</td>
+            <td>@item.FurloughModel.ToDate.ToString("dd/MM/yyyy")</td>
+            <td>@item.FurloughModel.NumberOfDaysOff.ToString()</td>
+            <td class="text-center"> @item.FurloughModel.LeaveCategory.LeaveCategoryName </td>
+            <td class="text-center">@item.FurloughModel.Reason</td>
+        </tr>
+         }
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        Portal.TableEdit("data-list",50,0,0,"multi");
+    });
+</script>

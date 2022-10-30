@@ -1,0 +1,44 @@
+﻿@model WorkdayEditViewModel
+@Html.Partial("~/Areas/HRMS/Views/EmployeeInfo/_EmployeeInfo.cshtml", Model.Employee)
+<div class="row">
+    <div class="col-lg-4">
+        @Html.TooltipLabelForRequired(it => it.Date1)
+        @Html.RequiredDateboxFor(it => it.Date1, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+    </div>
+    <div class="col-lg-4">
+        @Html.TooltipLabelForRequired(it => it.InTime)
+        @Html.RequiredTextboxFor(it => it.InTime, new { @class = "form-control time2" })
+    </div>
+    <div class="col-lg-4">
+        @Html.TooltipLabelForRequired(it => it.OutDate)
+        @Html.RequiredDateboxFor(it => it.OutDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        @Html.TooltipLabelForRequired(it => it.OutTime)
+        @Html.RequiredTextboxFor(it => it.OutTime, new { @class = "form-control time2" })
+    </div>
+    <div class="col-lg-4">
+        @Html.TooltipLabelForRequired(it => it.WorkTime)
+        @Html.RequiredTextboxFor(it => it.OutDate, new { @class = "form-control" })
+    </div>
+    <div class="col-lg-4">
+        @Html.TooltipLabelForRequired(it => it.OT)
+        @Html.RequiredTextboxFor(it => it.OT, new { @class = "form-control",type = "number" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        @Html.TooltipLabelForRequired(it => it.OTAfter22h)
+        @Html.RequiredTextboxFor(it => it.OTAfter22h, new { @class = "form-control", type = "number" })
+    </div>
+    <div class="col-lg-4">
+        @Html.TooltipLabelForRequired(it => it.IsNightShift)
+        @Html.CheckBoxFor(it => it.IsNightShift)
+    </div>
+    <div class="col-lg-4">
+        @Html.TooltipLabelForRequired(it => it.ShiftWorkId)
+        @Html.RequiredDropDownListFor(it => it.ShiftWorkId, null, LanguageResource.Dropdownlist_All, new { @class = "form-control"})
+    </div>
+</div>

@@ -1,0 +1,36 @@
+﻿@model List<FurloughDetailViewModel>
+@{
+    int k = -1, i = 0;
+
+}
+@if (Model != null && Model.Count() > 0)
+{
+    foreach (var item in Model)
+    {
+        k++;
+        <tr>
+            <td>
+                @{ 
+                    string Checked = Model[i].Check ? "Checked" : "";
+                }
+                <input name="checkID" type="checkbox" style = "width:20px;height:20px"  class="funcChkBox" @Checked data-hidden="FurloughDetailCheck_@i" >
+                <input type="hidden" name="FurloughDetail[@i].Check" value="@Model[i].Check.ToString().ToLower()" id='FurloughDetailCheck_@i' />
+                <input type="hidden" name="FurloughDetail[@i].FurloughId" value="@item.FurloughId" />
+            </td>
+            <td>
+                <div class="form-group col-md-5">
+                    <input type="hidden" name="FurloughDetail[@i].DayOff" value="@item.DayOff" />
+                    <input type="text" value="@Model[i].DayOff.ToString("dd/MM/yyyy")" class="form-control" readonly>
+                </div>
+            </td>
+            <td >
+                <div class="col-md-6">
+                    <input type="hidden" name="FurloughDetail[@i].TypeDate" value="@item.TypeDate" id="TypeDate_@i" />
+                    @Html.DropDownList(Model[i].TypeDate, new SelectList(ViewBag.TypeDate, "TypeDate", "TypeDateName", Model[i].TypeDate), htmlAttributes: new { @class = "form-control TypeDateChange", @id = i.ToString(), @onchange = "CallChangefunc(this)" })
+                </div>
+            </td>
+            <td>@Model[i].Note</td>
+        </tr>
+        i++;
+    }
+}

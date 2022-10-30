@@ -1,0 +1,36 @@
+﻿@model IEnumerable<HoliDayModel>
+@{
+    string CurrentController = ConstController.HoliDay;
+
+    string CurrentArea = ConstArea.HRMS;
+}
+<table id="data-list" class="table table-head-fixed text-nowrap">
+    <thead>
+        <tr>
+            <th class="text-center">@LanguageResource.Actions</th>
+            <th>@Html.DisplayNameFor(p => p.Date1)</th>
+            <th>@Html.DisplayNameFor(p => p.Name)</th>
+            <th>@Html.DisplayNameFor(p => p.Actived)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td class="text-center">
+                @HtmlExtensions.EditButton(CurrentArea, CurrentController, item.HolydayId)
+                @HtmlExtensions.DeleteButton(CurrentArea, CurrentController, @item.Name, item.HolydayId)
+            </td>
+            <td>@item.Date1.ToString("dd/MM/yyyy")</td>
+            <td>@item.Name</td>
+            <td class="text-center">@HtmlExtensions.ActivedIcon(item.Actived)</td>
+
+        </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(function () {
+        Portal.TableEdit();
+    });
+</script>

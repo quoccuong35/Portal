@@ -1,0 +1,50 @@
+﻿<div id="divAlertSuccess" class="alert alert-success alert-dismissable" style="display: none">
+    <button type="button" class="alert-close close" aria-hidden="true" data-div="divAlertSuccess">×</button>
+    <div class="alert-message">
+    </div>
+</div>
+
+<div id="divAlertWarning" class="alert alert-warning alert-dismissable" style="display: none">
+    <button type="button" class="alert-close close" aria-hidden="true" data-div="divAlertWarning">×</button>
+    <div class="alert-message">
+    </div>
+</div>
+
+<script>
+    function setMessage(div, message) {
+        if (Array.isArray(message)) {
+            var arr = [];
+            $.each(message, function (i, item) {
+                //Code cũ
+                //arr[i] = { err: item.ErrorMessage }
+                if (item.ErrorMessage != undefined && item.ErrorMessage != "") {
+                    arr[i] = { err: item.ErrorMessage }
+                }
+                else {
+                    arr[i] = { err: item }
+                }
+                $(div + " .alert-message").append("<li>" + arr[i].err + "</li>");
+            });
+        }
+        else {
+            $(div + " .alert-message").html(message);
+        }
+    }
+    function alertPopup(type, message) {
+        if (type == true) {
+            $("#divAlertSuccess .alert-message").html("");
+            setMessage("#divAlertSuccess", message);
+            $('.alert-success').show();
+            setTimeout(function () {
+                $('.alert-success').hide();
+            }, 3000)
+        }
+        else if (type == false) {
+            $("#divAlertWarning .alert-message").html("");
+            setMessage("#divAlertWarning", message);
+            $('.alert-warning').show();
+        }
+
+        $("html, body").animate({ scrollTop: 0 }, "fast");
+    }
+</script>

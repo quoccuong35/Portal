@@ -1,0 +1,109 @@
+﻿@model IEnumerable<WorkdayViewModel>
+@{
+    string CurrentController = ConstController.Workday;
+
+    string CurrentArea = ConstArea.HRMS;
+}
+<style>
+    .CoXNC {
+        background-color: #82E0AA !important;
+    }
+    .Cong {
+        background-color: #FFFF66 !important;
+    }
+
+</style>
+<table id="data-list" class="table table-head-fixed text-nowrap">
+    <thead>
+        @*<tr>
+            <th colspan="4" class="text-center">Thông tin @LanguageResource.EmployeeModel.ToLower()</th>
+            <th colspan="9" class="text-center">Thông tin @LanguageResource.EmployeeModel.ToLower()</th>
+        </tr>*@
+        <tr>
+            <th></th>
+            <th class="">STT</th>
+            <th>@LanguageResource.EmployeeCode</th>
+            <th>@LanguageResource.Customer_FullName</th>
+            <th>@LanguageResource.InDate</th>
+            <th>@LanguageResource.Department</th>
+            <th>@LanguageResource.InTime</th>
+            <th>@LanguageResource.InTimeEdit</th>
+            <th>@LanguageResource.OutDate</th>
+            <th>@LanguageResource.OutDateEdit</th>
+            <th>@LanguageResource.OutTime</th>
+            <th>@LanguageResource.OutTimeEdit</th>
+            <th>@LanguageResource.StartTime1</th>
+            <th>@LanguageResource.EndTime1</th>
+            <th>@LanguageResource.StatusWordday</th>
+            <th>@LanguageResource.Hour</th>
+            <th>@LanguageResource.Minute</th>
+            <th>@LanguageResource.TotalWH</th>
+            <th>@LanguageResource.WorkTime</th>
+            <th>@LanguageResource.WorkTimeEdit</th>
+            <th>@LanguageResource.OutOfficeHours</th>
+            <th>@LanguageResource.OT</th>
+            <th>@LanguageResource.OTEdit</th>
+            <th>@LanguageResource.OTAfter22h</th>
+            <th>@LanguageResource.OTAfter22hEdit</th>
+            <th>@LanguageResource.Saturday</th>
+            <th>@LanguageResource.DayOfWeek</th>
+            <th>@LanguageResource.Status</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 1;
+            foreach (var item in Model)
+            {
+                <tr class="text-center">
+                    <td class="text-center">@HtmlExtensions.ButtonWorkday()</td>
+                    <td class="text-center">@i</td>
+                    <td>@item.EmployeeCode</td>
+                    <td>@item.FullName</td>
+                    <td>@item.InDate.ToString("dd/MM/yyyy")</td>
+                    <td>@item.DepartmentName</td>
+                    <td class="@item.InTimeCSS">@item.InTime</td>
+                    <td> <input type="text" class="form-control time2 WorkdayEdit" name="InTimeEdit" value="@item.InTimeEdit" data-employeeid="@item.EmployeeId" data-day="@item.InDate.ToString("dd/MM/yyyy")" style="padding:0px;margin:0px"></td>
+                    <td>@item.OutDate.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        @{
+                            string outDate = "";
+                            if (item.OutDateEdit != null)
+                            {
+                                outDate = item.OutDateEdit.Value.ToString("dd/MM/yyyy");
+                            }
+                        } @outDate
+                    </td>
+                    <td class="@item.InTimeCSS">@item.OutTime</td>
+                    <td><input type="text" class="form-control time2 WorkdayEdit" name="OutTimeEdit" value="@item.OutTimeEdit" data-employeeid="@item.EmployeeId" data-day="@item.InDate.ToString("dd/MM/yyyy")" style="padding:0px;margin:0px"></td>
+                    <td class="text-center">@item.StartTime</td>
+                    <td class="text-center">@item.EndTime</td>
+                    <td class="text-center"> @item.StatusWordday</td>
+                    <td class="text-center">@item.Hour</td>
+                    <td class="text-center">@item.Minute</td>
+                    <td class="text-center">@item.TotalWH</td>
+                    <td class="text-center Cong">@item.WorkTime</td>
+                    <td class="text-center">@item.WorkTimeEdit</td>
+                    <td class="text-center">@item.OutOfficeHours</td>
+                    <td class="text-center Cong">@item.OT</td>
+                    <td class="text-center">@item.OTEdit</td>
+                    <td class="text-center Cong">@item.OTAfter22h</td>
+                    <td class="text-center">@item.OTAfter22hEdit</td>
+                    <td class="text-center">@item.Saturday</td>
+                    <td class="text-center">@item.DayOfWeek</td>
+                    <td class="text-center">@item.Status</td>
+
+                </tr>
+                i++;
+            }
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(function () {
+        Portal.TableEdit("data-list", 50, 5, 0, "api");
+        $('.time2').timepicker({ 'timeFormat': 'H:i' });
+    });
+   
+</script>

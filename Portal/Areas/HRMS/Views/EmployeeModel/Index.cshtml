@@ -1,0 +1,124 @@
+﻿@model EmployeeSearch
+@{
+    ViewBag.Title = LanguageResource.EmployeeModel.ToLower();
+    string CurrentController = ConstController.EmployeeModel;
+    string CurrentArea = ConstArea.HRMS;
+    string CurrentUrl = HtmlExtensions.GetCurrentUrl(CurrentArea, CurrentController);
+}
+<style>
+    .search {
+        position: fixed;
+        z-index: 9999;
+        right:0;
+    }
+    .screen-reader-text {
+        clip: rect(1px,1px,1px,1px);
+        word-wrap: normal !important;
+        border: 0;
+        -webkit-clip-path: inset(50%);
+        clip-path: inset(50%);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+</style>
+<div class="content-wrapper layout-fixed">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-4">
+                    <h4 class="m-0 text-dark">Quản lý @ViewBag.Title</h4>
+                </div>
+                <div class="col-sm-8">
+                    <div class="float-right">
+                        @HtmlExtensions.CreateButton(CurrentArea, CurrentController)
+                        @HtmlExtensions.ExportButton(CurrentArea, CurrentController)
+                        @HtmlExtensions.ImportButton(CurrentArea, CurrentController)
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <div class="search">
+        <i class="fas fa-search-plus fs-25"></i>
+    </div>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                @using (Html.BeginForm("_Search", null, FormMethod.Post, new { @id = "frmSearch" }))
+                {
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-search-plus"></i> Tìm kiếm</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    @Html.TooltipLabelFor(p => p.DepartmentID)
+                                    @Html.DropDownList("DepartmentID", null, LanguageResource.Dropdownlist_All, new { @class = "form-control with-search" })
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.TooltipLabelFor(p => p.EmployeeCode)
+                                    @Html.TextBoxFor(p => p.EmployeeCode, new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-3">
+                                    @Html.TooltipLabelFor(p => p.FullName)
+                                    @Html.TextBoxFor(p => p.FullName, new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.TooltipLabelFor(p => p.EmployeeStatusCategoryId)
+                                    @Html.DropDownList("EmployeeStatusCategoryId", null, LanguageResource.Dropdownlist_All, new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.TooltipLabelFor(p => p.Actived)
+                                    @Html.DropDownList("Actived", new List<SelectListItem>(){
+                                       new SelectListItem(){Text = LanguageResource.Dropdownlist_All, Value = ""},
+                                       new SelectListItem(){Text = LanguageResource.Actived_True, Value = "true", Selected = true},
+                                       new SelectListItem(){Text = LanguageResource.Actived_False, Value = "false"}
+                                       }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            @HtmlExtensions.SearchButton()
+                        </div>
+                        <!-- /.card-footer-->
+                    </div>
+                }
+            </div>
+            <div class="col-md-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-body table-responsive">
+                        <div id="divSearchResult"></div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+@section CustomScripts {
+    <script>
+        //load default and set event
+        $(document).ready(function () {
+            $("select").select2({ width: "100%" });
+            Portal.TableEdit('data-list', 50, 0, 1, "single");
+            Portal.SearchInitial("@CurrentUrl", 4);
+            
+            Portal.ShowMessage(window.location.href);
+        });
+    </script>
+}

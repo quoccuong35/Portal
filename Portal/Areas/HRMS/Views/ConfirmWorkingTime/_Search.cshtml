@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ConfirmWorkingTimeModel>
+@{
+    string CurrentController = ConstController.ConfirmWorkingTime;
+    string CurrentArea = ConstArea.HRMS;
+}
+<table id="data-list" class="table table-head-fixed text-nowrap">
+    <thead>
+        <tr>
+            <th>@LanguageResource.Actions</th>
+            <th>@LanguageResource.EmployeeCode</th>
+            <th>@LanguageResource.FullName</th>
+            <th>@LanguageResource.Date1</th>
+            <th>@LanguageResource.Time1</th>
+            <th>@LanguageResource.Type1</th>
+            <th>@LanguageResource.BrowseStatusID </th>
+            <th>@LanguageResource.Reason</th>
+            <th>@LanguageResource.ReasonStop</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td class="text-center">
+                @HtmlExtensions.EditButton(CurrentArea, CurrentController, item.ConfirmWorkingTimeID)
+                @if (!item.Disable1)
+                {
+                    @HtmlExtensions.DeleteButton(CurrentArea, CurrentController, "Xác nhận công đang chọn", item.ConfirmWorkingTimeID)
+                }
+            </td>
+            <td>@item.EmployeeModel.EmployeeCode</td>
+            <td>@item.EmployeeModel.FullName</td>
+            <td>@item.Date1.ToString("dd/MM/yyyy")</td>
+            <td>@item.Time1.ToString(@"hh\:mm")</td>
+            <td>
+                @item.Type1.Replace("1", "Giờ vào").Replace("2", "Giờ ra")
+            </td>
+            <td class="text-center">@item.BrowseStatusModel.BrowseStatusName </td>
+            <td class="text-center">@item.Reason</td>
+            <td class="text-center">@item.ReasonStop</td>
+        </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        Portal.TableEdit("data-list",50,1,0,"api");
+    });
+</script>
